@@ -27,7 +27,7 @@
 .lab-record-result{margin-top:10px;padding:11px;border-radius:9px;background:#1c3636;color:#bce7cd;font-size:12px;line-height:1.8}
 .lab-record-result.warn{background:#382d36;color:#ffd2d2}
 .lab-record-foot small{font-size:11px;color:#9dafc5}
-</style>
+.beginner-guide{border:1px solid #4c7c63;background:#173229;padding:17px 19px;border-radius:12px;color:#c6efdc;margin:18px 0;line-height:1.9;font-size:13px}.beginner-guide p{margin-top:8px}.beginner-guide b{color:#a1f2bf}</style>
 </head>
 <body>
   <div class="app-shell">
@@ -78,12 +78,12 @@ const LEVELS = [
 
 const COURSES = [
 {
- id:'1-1',level:1,title:'逆向工程第一性原理',minutes:65,tag:'思维模型',intro:'逆向工程从「结果」倒推「可能的机制」，它提供证据与解释，而不是保证拿回开发者原始代码。',
+ id:'1-1',level:1,title:'从一个按钮理解软件',minutes:45,tag:'零基础入门',intro:'第一课只做一件事：区分屏幕上看到了什么，以及屏幕后面还有什么不知道。完全不需要专业术语。',
  concepts:[
- ['黑盒与白盒','黑盒只能观察输入、输出与可见行为；白盒拥有源码或内部结构。实际项目往往是灰盒：能看见网页脚本，却看不见私有后端。'],
- ['静态与动态','静态分析不运行目标：阅读程序文件、依赖和符号；动态分析观察真实执行过程、网络和状态变化。两种证据要相互印证。'],
- ['Decompile → Understand → Recreate','先提取可读线索，再沿证据解释功能，最后针对自己的技术栈独立实现。反编译的伪代码不等于原始源码。']
- ],example:'场景：看见「关闭项目」按钮。黑盒能观察弹窗与保存后的状态；静态分析可能发现状态枚举；真正的服务端保存逻辑仍需单独验证。',lab:['为一个常用应用列出 3 个可观察行为','分别标注每个行为属于静态/动态/未知证据','写一句话解释为何「页面可见」不等于「后端已知」'],deliver:'一页黑盒/灰盒/白盒证据对照表',quiz:{q:'REA 分析一套应用后，哪个结论最可靠？',options:['必然恢复原始源码','能形成有来源、有边界的行为和结构分析','一定能读取云端私有数据库'],a:1,why:'REA 的设计强调可复查证据，不声称自动克隆应用或恢复原始源码。'}
+ ['看得到 ≠ 全知道','想象你在餐厅点餐：能看到菜单和菜品，但看不到厨房做法。打开 App 看到按钮也是同样道理。'],
+ ['动手观察','例如点击「收藏」后爱心变红了，你知道屏幕发生了变化，但还不知道网站有没有在服务器保存数据。先观察，再提问。'],
+ ['REA 在帮我们做什么','REA 像调查助手，能分析你有权访问的程序线索，帮助理解软件的工作方式；看到页面不会自动知道全部内部细节。']
+ ],example:'生活例子：打开外卖 App，看到「提交订单」按钮，只能说明页面提供了入口。订单有没有成功存入系统，还要观察实际结果。就像看到餐厅菜单，不代表知道厨房的做法。',lab:['找一个熟悉的 App 按钮（例如收藏、购物车），写写你看到了什么','点一下按钮：有什么变化？有什么事情暂时看不出来？','用自己的话说：为什么看到按钮，也不等于知道软件背后怎样工作？'],deliver:'三句自己的观察或想法；用大白话即可',quiz:{q:'你在 App 上看到一个「提交」按钮，哪句话更准确？',options:['只要看见按钮，就一定知道服务器怎样处理','只能确认页面有这个按钮；背后怎样处理还要了解','有这个按钮就能立即得到软件的全部源码'],a:1,why:'看到按钮只能证明页面展示了入口，背后有没有保存、怎样处理，需要进一步观察。'}
 },
 {
  id:'1-2',level:1,title:'本地环境与安全安装',minutes:95,tag:'环境配置',intro:'先诊断，再安装。工具链的版本、系统和权限边界，决定后续分析是否可信。',
@@ -286,7 +286,7 @@ const STORE_KEY = 'rea_academy_progress_v1';
 const ids = COURSES.map(c=>c.id);
 const defaultState = {completed:[],answers:{},tasks:{},notes:{},last:'1-1'};
 function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE_KEY)||'{}');return {completed:Array.isArray(s.completed)?s.completed.filter(id=>ids.includes(id)):[],answers:typeof s.answers==='object'&&s.answers?s.answers:{},tasks:typeof s.tasks==='object'&&s.tasks?s.tasks:{},notes:typeof s.notes==='object'&&s.notes?s.notes:{},last:ids.includes(s.last)?s.last:'1-1'};}catch{return {...defaultState}}}
-let state=loadState();let filterLevel=0;let searchTerm='';let toastTimer;
+let state=loadState();if((state.notes['1-1:2']?.history||[]).length){const prev=state.tasks['1-1']||[false,false,false];prev[2]=true;state.tasks['1-1']=prev;}let filterLevel=0;let searchTerm='';let toastTimer;
 const el=id=>document.getElementById(id);
 const course=id=>COURSES.find(c=>c.id===id);
 const level=id=>LEVELS.find(l=>l.id===Number(id));
@@ -330,18 +330,13 @@ function roadmap(){return `<div class="kicker">CAREER FRAMEWORK / L1—L5</div><
 function resources(){const cards=[['⌘','REA 官方仓库','工具能力、安装、版本与适用边界，以官方 README 为准。','https://github.com/morluto/rea','查看 GitHub'],['▤','REA 文档索引','跟随文档目录查找 Web、JavaScript、MCP、Provider 等专题。','https://github.com/morluto/rea/tree/main/docs','查看 Docs'],['◇','Playwright','用于浏览器自动化、页面状态观察与 E2E 测试。','https://playwright.dev/docs/intro','查看文档'],['⚙','Chrome DevTools','阅读浏览器 DOM、Network 和调试信息。','https://developer.chrome.com/docs/devtools','查看文档'],['◌','Model Context Protocol','理解 Agent 工具的协议与接口边界。','https://modelcontextprotocol.io/introduction','查看协议'],['↗','Codex','将结构化逆向证据转成独立实现及自动化测试。','https://developers.openai.com/codex/','查看 Codex']];return `<div class="kicker">REFERENCE DESK / TOOLKIT</div><h1 class="h1">工具箱与知识库<span style="color:var(--accent)">.</span></h1><p class="lede">工具文档会不断变化。本站讲授的是稳定的分析方法；实际命令、平台支持和安装参数，请在执行前核对官方版本。</p><div class="resource-grid">${cards.map(c=>`<div class="resource"><div class="resource-icon">${c[0]}</div><div><h3>${c[1]}</h3><p>${c[2]}</p><a href="${c[3]}" target="_blank" rel="noopener noreferrer">${c[4]} ↗</a></div></div>`).join('')}</div><section class="section"><div class="panel"><div class="row-between"><div><h3 class="panel-title">你的学习数据属于你</h3><p class="panel-desc">进度和答题记录保存在当前浏览器的 localStorage，不会跨设备自动同步。随时导出 JSON 备份，再导入到其他设备。</p></div></div><div class="hero-actions"><button class="btn primary" data-action="export">↓ 导出进度 JSON</button><button class="btn ghost" data-action="import">↑ 导入进度 JSON</button></div></div></section>`}
 
 function checkOpenAnswer(id,index,answer){
- if(id==='1-1'&&index===2){
-  const rules=[
-   [/页面|界面|前端|浏览器|UI/i,'提到页面或前端是可观察的范围'],
-   [/后端|服务端|服务器|数据库|后台/,'指出后端业务、数据或服务端实现仍未知'],
-   [/接口|API|验证|测试|证据|无法证明|不足以|需要|不能证明/i,'指出仍需接口、行为或服务端证据']
-  ];
-  const missing=rules.filter(rule=>!rule[0].test(answer)).map(rule=>rule[1]);
-  return missing.length?{passed:false,text:'已记录。建议补充：'+missing.join('；')+'。参考：页面只证明前端呈现，后端规则、数据与权限还需要额外证据验证。'}:{passed:true,text:'已覆盖 3/3 个关键点：前端可见、后端未知、需要独立验证。这个解释符合本节要求。'};
+ const reply=String(answer||'').trim();
+ if(id==='1-1'){
+  const example='例子：我看到外卖 App 有下单按钮，但还不知道订单有没有真正保存。就像看到餐厅菜单，不代表知道厨房怎么做。';
+  return {passed:true,text:reply.length<5?'已经收到你的想法。第一课不考专业词，也没有开放题不及格。可以看看这个例子，再用自己的话说一句：'+example:'你的原话已记录。第一课按主动观察与表达记录，不会因为没写“前端”“后端”“接口”就判错。'+example};
  }
- return {passed:true,text:'回答已记录。请对照本节概念与实验交付物检查；本站不会假装自动验证你在本地运行的工具。'};
+ return {passed:true,text:'已经保存你的原话。这是一份学习笔记，不会因缺少专业术语判不通过。真实实验仍要自己验证。'};
 }
-
 
 function journalPage(){
  const records=Object.entries(state.notes||{}).filter(([k,n])=>n&&(n.draft||n.history?.length)).sort((a,b)=>(b[1].updatedAt||'').localeCompare(a[1].updatedAt||''));
@@ -356,8 +351,8 @@ function lessonPage(c){const l=level(c.level);state.last=c.id;save();const idx=C
  <header class="learning-header"><div class="meta">${badge(l)} <span>LESSON ${c.id}</span><span>◷ ${c.minutes} MIN</span><span>◆ ${c.tag}</span></div><h1 class="h1">${c.title}<span style="color:${l.color}">.</span></h1><p class="lede">${c.intro}</p></header>
  <div class="learning-layout"><div class="content-stack">
  <section class="learn-card" id="theory"><div class="section-step">01 / CORE KNOWLEDGE</div><h2>知识框架</h2><p class="under-title">先掌握重要概念，再看它们如何连接成一个可分析的系统。</p><div class="concept-list">${c.concepts.map((con,i)=>`<div class="concept"><span class="num">CONCEPT 0${i+1}</span><h3>${con[0]}</h3><p>${con[1]}</p></div>`).join('')}</div><div class="case-study"><b>应用到实际场景：</b> ${c.example}</div>${c.code?`<div class="row-between" style="margin-top:22px"><span class="section-step" style="margin:0">TERMINAL / EXAMPLE</span><button class="link-text" data-copy="${c.id}">复制命令 ↗</button></div><pre class="code-block">${h(c.code)}</pre>`:''}</section>
- <section class="learn-card" id="lab"><div class="section-step">02 / HANDS-ON LAB</div><h2>动手实验</h2><p class="under-title">实验不需要在本站上传账号或程序。请在自己的授权测试环境完成，再逐项自评勾选。</p><div class="lab-tasks">${c.lab.map((task,i)=>`<div class="lab-unit"><label class="task"><input type="checkbox" data-task="${c.id}" data-task-index="${i}" ${tasks[i]?'checked':''}/><span>${h(task)}</span></label><div class="lab-record"><div class="lab-record-title">✎ 我的回答 / 实验记录</div><textarea class="lab-textbox" data-note="${c.id}" data-note-index="${i}" aria-label="实验 ${i+1} 的个人回答" placeholder="写下你的解释、取证依据、观察结果或疑问；内容自动保存在本浏览器。">${h(state.notes[c.id+":"+i]?.draft||"")}</textarea><div class="lab-record-foot"><small id="note-status-${c.id}-${i}">${state.notes[c.id+":"+i]?.updatedAt?"已保存 · "+new Date(state.notes[c.id+":"+i].updatedAt).toLocaleString("zh-CN"):"待填写 · 自动保存"}</small><button class="btn sm ghost" data-note-submit="${c.id}" data-note-index="${i}">提交回答 · 检查理解 ↗</button></div>${state.notes[c.id+":"+i]?.feedback?`<div class="lab-record-result ${state.notes[c.id+":"+i].feedback.passed?"":"warn"}">${h(state.notes[c.id+":"+i].feedback.text)}<br/><span class="tiny muted">已提交 ${state.notes[c.id+":"+i].history?.length||0} 次 · 这是离线规则自检，不是 AI 评分。</span></div>`:""}</div></div>`).join("")}</div><div class="deliverable"><strong>⌑ 本节交付物：</strong>${c.deliver}</div></section>
- <section class="learn-card" id="check"><div class="section-step">03 / KNOWLEDGE CHECK</div><h2>检验你的理解</h2><p class="under-title">回答这道关键题。答对后，还需勾选 3 项实验步骤，才能标记本节完成。</p><h3 style="font-size:14px;line-height:1.9;margin-top:20px">${c.quiz.q}</h3><div class="quiz-options">${c.quiz.options.map((o,i)=>`<button class="option ${answered===i?'selected':''} ${answered===i?(right?'correct':'wrong'):''}" data-answer="${c.id}" data-option="${i}"><span class="option-index">${'ABC'[i]}</span>${h(o)}</button>`).join('')}</div>${Number.isInteger(answered)?`<div class="result-box ${right?'':'bad'}"><b>${right?'✓ 答对了！':'△ 再想一想'}</b><br/>${c.quiz.why}</div>`:'<p class="quiz-hint">知识检验可以反复尝试，不计入外部考试成绩。</p>'}<div class="row-between" style="margin-top:23px;flex-wrap:wrap"><span class="tiny muted">${checked}/3 实验步骤 · ${right?'知识检验已通过':'待通过知识检验'}</span><button class="btn primary" data-finish="${c.id}" ${ready?'':'disabled'}>${done(c.id)?'✓ 已完成本节':'完成本节 →'}</button></div></section>
+ <section class="learn-card" id="lab"><div class="section-step">02 / HANDS-ON LAB</div><h2>动手实验</h2><p class="under-title">${c.level===1?'L1 从大白话开始：不懂就写“不懂”，想到什么、看到了什么，都可以记下来。专业名词慢慢学。':'实验只使用自己的或取得授权的测试环境；写下观察，再自评完成。'}</p>${c.id==='1-1'?`<div class="beginner-guide"><strong>🍜 看一眼就懂的例子</strong><p>外卖 App 有「付款」按钮，就像餐厅有菜单；看得到按钮，不代表已经知道钱怎么结算、订单保存到哪里。</p><p><b>第一课只学一句：</b>看到外面，不代表了解里面。用自己的话说就可以，绝不按术语打分。</p></div>`:''}<div class="lab-tasks">${c.lab.map((task,i)=>`<div class="lab-unit"><label class="task"><input type="checkbox" data-task="${c.id}" data-task-index="${i}" ${tasks[i]?'checked':''}/><span>${h(task)}</span></label><div class="lab-record"><div class="lab-record-title">✎ 我的回答 / 实验记录</div><textarea class="lab-textbox" data-note="${c.id}" data-note-index="${i}" aria-label="实验 ${i+1} 的个人回答" placeholder="写下你的解释、取证依据、观察结果或疑问；内容自动保存在本浏览器。">${h(state.notes[c.id+":"+i]?.draft||"")}</textarea><div class="lab-record-foot"><small id="note-status-${c.id}-${i}">${state.notes[c.id+":"+i]?.updatedAt?"已保存 · "+new Date(state.notes[c.id+":"+i].updatedAt).toLocaleString("zh-CN"):"待填写 · 自动保存"}</small><button class="btn sm ghost" data-note-submit="${c.id}" data-note-index="${i}">${c.level===1?'保存我的想法 · 看参考讲解 ↗':'提交回答 · 检查理解 ↗'}</button></div>${state.notes[c.id+":"+i]?.feedback?`<div class="lab-record-result ${state.notes[c.id+":"+i].feedback.passed?"":"warn"}">${h(state.notes[c.id+":"+i].feedback.text)}<br/><span class="tiny muted">已提交 ${state.notes[c.id+":"+i].history?.length||0} 次 · 这是离线规则自检，不是 AI 评分。</span></div>`:""}</div></div>`).join("")}</div><div class="deliverable"><strong>⌑ 本节交付物：</strong>${c.deliver}</div></section>
+ <section class="learn-card" id="check"><div class="section-step">03 / KNOWLEDGE CHECK</div><h2>检验你的理解</h2><p class="under-title">${c.level===1?'这里是帮助理解的小问题，选错会给解释，可以重新选。无需背专业词。':'通过小测后，结合实验记录自评完成。'}</p><h3 style="font-size:14px;line-height:1.9;margin-top:20px">${c.quiz.q}</h3><div class="quiz-options">${c.quiz.options.map((o,i)=>`<button class="option ${answered===i?'selected':''} ${answered===i?(right?'correct':'wrong'):''}" data-answer="${c.id}" data-option="${i}"><span class="option-index">${'ABC'[i]}</span>${h(o)}</button>`).join('')}</div>${Number.isInteger(answered)?`<div class="result-box ${right?'':'bad'}"><b>${right?'✓ 答对了！':'△ 再想一想'}</b><br/>${c.quiz.why}</div>`:'<p class="quiz-hint">知识检验可以反复尝试，不计入外部考试成绩。</p>'}<div class="row-between" style="margin-top:23px;flex-wrap:wrap"><span class="tiny muted">${checked}/3 实验步骤 · ${right?'知识检验已通过':'待通过知识检验'}</span><button class="btn primary" data-finish="${c.id}" ${ready?'':'disabled'}>${done(c.id)?'✓ 已完成本节':'完成本节 →'}</button></div></section>
  ${next?`<button class="next-lesson" data-route="lesson/${next.id}"><span>下一单元 · ${next.title}</span><b>→</b></button>`:'<button class="next-lesson" data-route="home"><span>恭喜到达课程最后一站 · 返回总览</span><b>→</b></button>'}</div>
  <aside class="side-study"><div class="study-panel"><h3>本节学习进度</h3><div class="study-ring" style="--pct:${lessonPercent}%"><b>${lessonPercent}%</b><small>CHECKLIST</small></div><div class="study-progress-text">${checked}/3 Lab 已勾选 · ${right?'Quiz 已通过':'Quiz 未通过'}</div><hr class="line"/><h3>学习导航</h3><nav class="lesson-mini-nav"><button data-scroll="theory">◈ 核心概念</button><button data-scroll="lab">▤ 动手实验</button><button data-scroll="check">◎ Knowledge Check</button></nav></div><div class="study-panel"><h3>当前 Level</h3><p>L${l.id} ${l.name} · ${doneIn(l.id)}/5 节已完成</p><div class="progress-track" style="margin-top:14px"><span style="width:${doneIn(l.id)*20}%"></span></div><button class="btn sm ghost" style="margin-top:18px;width:100%" data-route="level/${l.id}">查看本级课表 ↗</button></div><div class="notice"><strong>学习提醒：</strong>本站知识检验为练习题。真实项目仍需要保存分析证据、运行日志和实际验收。</div></aside></div>`}
 function render(){const r=routeFromHash();let page,crumb='学习总览';if(r==='home'){page=home()}else if(r==='journal'){page=journalPage();crumb='学习日志'}else if(r==='curriculum'){page=curriculum();crumb='课程目录'}else if(r==='roadmap'){page=roadmap();crumb='能力路线图'}else if(r==='resources'){page=resources();crumb='工具与资源'}else if(r.startsWith('lesson/')){const c=course(r.split('/')[1]);if(c){page=lessonPage(c);crumb=`L${c.level} / ${c.title}`}else{page=home()}}else if(r.startsWith('level/')){const l=level(r.split('/')[1]);if(l){page=levelPage(l);crumb=`L${l.id} ${l.name}`}else page=home()}else{page=home()};el('page-content').innerHTML=page;el('crumb-name').textContent=crumb;updateSidebar(r);document.title=`${crumb} · REA Academy`}
@@ -373,14 +368,14 @@ document.addEventListener('click',e=>{
   const id=b.dataset.noteSubmit,index=Number(b.dataset.noteIndex),key=id+':'+index;
   const entry=state.notes[key]||{draft:'',history:[]};
   const answer=(entry.draft||'').trim();
-  if(answer.length<10){toast('请先写至少 10 个字，再提交回答');return}
+  if(!answer){toast('请先写一点你的想法，不用专业术语');return}
   const feedback=checkOpenAnswer(id,index,answer);
   entry.feedback=feedback;entry.updatedAt=new Date().toISOString();
   entry.history=[...(entry.history||[]),{answer,submittedAt:entry.updatedAt,feedback}].slice(-30);
   state.notes[key]=entry;
-  if(id==='1-1'&&index===2&&feedback.passed){const t=state.tasks[id]||[false,false,false];t[index]=true;state.tasks[id]=t;}
+  if(id==='1-1'&&feedback.passed){const t=state.tasks[id]||[false,false,false];t[index]=true;state.tasks[id]=t;}
   save();render();document.querySelector('[data-note="'+id+'"][data-note-index="'+index+'"]')?.scrollIntoView({block:'center',behavior:'smooth'});
-  toast(feedback.passed?'回答已保存并通过规则自检':'回答已保存，请根据提示补充');return;
+  toast('你的回答已保存 · 第一课不考专业术语');return;
  }
  if(b.dataset.answer){const id=b.dataset.answer;state.answers[id]=Number(b.dataset.option);save();render();document.getElementById('check')?.scrollIntoView({block:'center',behavior:'smooth'});return}
  if(b.dataset.finish){const id=b.dataset.finish;const c=course(id);const ok=state.answers[id]===c.quiz.a&&(state.tasks[id]||[]).filter(Boolean).length===3;if(ok){if(!done(id))state.completed.push(id);save();toast('已完成 '+c.title);const i=COURSES.indexOf(c);route(COURSES[i+1]?`lesson/${COURSES[i+1].id}`:'home')}return}
