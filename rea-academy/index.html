@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0c1222" />
+  <meta name="description" content="REA Academy — 从逆向工程基础到 AI 逆向架构师，25 节课程、交互测验与实战进度管理。" />
+  <title>REA Academy · AI 逆向工程学习工作台</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap');
+:root{--bg:#0b1120;--sidebar:#0c1220;--main:#0f1525;--card:#161e30;--card2:#192237;--border:#293348;--borderlight:#344158;--txt:#eef3ff;--muted:#9eabc2;--soft:#6e7e9a;--accent:#a1f2bf;--accent2:#85d8f2;--shadow:0 15px 40px #01040f40;font-family:Inter,system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;color:var(--txt);background:var(--bg)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-width:320px}button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}a{color:inherit;text-decoration:none}strong,b{font-weight:700}h1,h2,h3,h4,p{margin:0}::selection{background:#a1f2bf;color:#0b1120}
+.app-shell{display:grid;grid-template-columns:270px minmax(0,1fr);min-height:100vh}.sidebar{background:var(--sidebar);border-right:1px solid var(--border);height:100vh;position:sticky;top:0;display:flex;flex-direction:column;padding:27px 16px 20px;overflow-y:auto;scrollbar-width:thin}.brand{display:flex;align-items:center;gap:12px;padding:0 12px 38px;cursor:pointer}.brand-mark{width:40px;height:40px;border-radius:12px;background:#b7f9c7;color:#122719;font-size:28px;font-weight:800;display:grid;place-items:center;position:relative;transform:rotate(-5deg)}.brand-mark>span{transform:rotate(5deg)}.brand-mark i{position:absolute;right:-6px;top:-6px;width:10px;height:10px;border:2px solid var(--sidebar);background:#f9bd71;border-radius:50%}.brand-word b{font-size:16px;letter-spacing:-.5px;display:block}.brand-space{color:#6a7891;padding:0 2px}.brand-word small{font-size:8px;color:#7c8da7;letter-spacing:1.35px;font-weight:700}.sidebar-section-label,.sidebar-head{font:600 10px 'DM Mono',monospace;letter-spacing:1.25px;color:#73849e;padding:0 14px;margin-bottom:12px}.primary-nav{display:grid;gap:3px;margin-bottom:34px}.nav-link{width:100%;background:transparent;border:1px solid transparent;border-radius:9px;color:#9baac4;display:flex;align-items:center;gap:12px;padding:12px 13px;text-align:left;font-size:12px;font-weight:600}.nav-link:hover,.nav-link.active{background:#1d283d;color:#fff;border-color:#26354a}.nav-link.active .nav-ico{color:var(--accent)}.nav-ico{width:20px;font-size:18px;font-family:system-ui;font-weight:500;text-align:center;line-height:1}.nav-end,.nav-count{margin-left:auto;font-size:11px;color:#6e819f}.nav-count{border:1px solid #3a4660;padding:2px 5px;border-radius:4px}.sidebar-head{margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}.sidebar-head small{font-size:9px;color:#586983}.sidebar-levels{display:grid;gap:4px}.side-level{padding:11px;border-radius:10px;display:flex;align-items:center;gap:11px;background:transparent;border:1px solid transparent;text-align:left;width:100%;color:#afbed5}.side-level:hover{background:#1a2437}.side-level.active{background:#1e2a3d;border-color:#32445d}.side-level-number{font:600 10px 'DM Mono',monospace;display:grid;place-items:center;width:33px;height:33px;min-width:33px;border:1px solid #47536c;border-radius:9px;color:#c9d8f0}.side-level.active .side-level-number{background:#a1f2bf;color:#0a2416;border-color:transparent}.side-level strong{font-size:12px;display:block}.side-level small{display:block;margin-top:3px;font-size:10px;color:#788aa3}.side-level .level-dot{margin-left:auto;color:#72839d;font-size:13px}.side-footer{margin-top:auto;padding:40px 9px 0}.mini-profile{border-top:1px solid #2c384c;padding-top:18px;display:flex;align-items:center;gap:10px}.avatar{width:35px;height:35px;border-radius:11px;background:linear-gradient(135deg,#92c9ec,#c09eed);color:#1c2740;display:grid;place-items:center;font-weight:800}.mini-profile b{font-size:11px;display:block}.mini-profile span{font-size:9px;color:#7f8ba4;display:block;margin-top:3px}.mini-arrow{margin-left:auto}.mini-progress{margin-top:22px}.mini-progress-title{display:flex;justify-content:space-between;font-size:10px;color:#8f9cb4;margin-bottom:8px}.mini-progress-title b{color:var(--accent)}.progress-track{height:5px;border-radius:10px;background:#28334a;overflow:hidden}.progress-track span{display:block;height:100%;width:0;background:linear-gradient(90deg,#7ebde6,#a1f2bf);border-radius:inherit;transition:width .4s}.backup-btn{margin-top:18px;background:transparent;border:1px solid #37445d;border-radius:7px;color:#a5b3ca;padding:10px;font-size:11px;width:100%;text-align:left}.backup-btn:hover{background:#243048;color:white}.main-wrap{min-width:0;display:flex;flex-direction:column;background:var(--main)}.topbar{height:78px;padding:0 clamp(20px,4vw,64px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-shrink:0}.crumb{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.3px;color:#8191ab}.crumb strong{color:#e8efff;font-size:12px}.crumb-divider{color:#43516a}.top-actions{display:flex;gap:13px;align-items:center;font-size:11px;color:#73849c}.live-dot{height:7px;width:7px;border-radius:50%;background:#a3f4bc;box-shadow:0 0 0 4px #a3f4bc1b}.icon-button{border:1px solid #3c4860;background:#1b2438;border-radius:10px;color:#cad8ed;width:36px;height:36px;font-size:17px}.icon-button:hover{border-color:#93e8b3;color:white}.mobile-menu{display:none}.page-content{width:min(1370px,100%);padding:34px clamp(20px,4vw,64px) 54px;margin:auto;flex:1}.site-footer{display:flex;justify-content:space-between;gap:12px;align-items:center;color:#6b7a94;font-size:10px;padding:18px clamp(20px,4vw,64px);border-top:1px solid var(--border);letter-spacing:.3px}.footer-sep{color:#abf4c3;padding:0 8px}
+.kicker{font:600 11px 'DM Mono',monospace;letter-spacing:1.5px;color:#9ee8ba;display:flex;gap:10px;align-items:center}.kicker:before{content:'';height:1px;background:#9ee8ba;width:19px}.h1{font-size:clamp(29px,3.1vw,49px);letter-spacing:-2px;line-height:1.17;margin:13px 0 12px;font-weight:800}.h1 em{font-style:normal;color:#a5edc2}.lede{font-size:13px;line-height:2;color:#99a9c1;max-width:720px}.hero{min-height:278px;border-radius:19px;background:radial-gradient(ellipse 480px 330px at 85% 15%,#2b5156 0%,transparent 70%),radial-gradient(ellipse 390px 280px at 64% 92%,#25345b88 0%,transparent 75%),linear-gradient(110deg,#1a2a3e,#17223a);border:1px solid #34475e;padding:35px 38px;position:relative;overflow:hidden;display:flex;align-items:stretch;box-shadow:var(--shadow)}.hero>*{position:relative;z-index:1}.hero-text{max-width:660px}.hero .h1{margin-top:13px}.hero-art{position:absolute;right:52px;top:36px;width:240px;height:240px;z-index:0;opacity:.8}.orbit{border:1px solid #a4e5d64b;position:absolute;border-radius:50%;inset:0;transform:rotate(-25deg) scaleX(.75)}.orbit:nth-child(2){inset:29px;border-style:dashed;transform:rotate(23deg) scaleX(.87)}.orbit:nth-child(3){inset:71px;background:#a3f5c41b;box-shadow:0 0 80px #63e0cf17;border-style:solid}.orbit:before{content:'';width:8px;height:8px;border-radius:50%;background:#a5efbf;display:block;position:absolute;left:10px;top:55px}.hero-actions{display:flex;gap:12px;margin-top:25px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:10px;padding:12px 18px;border:1px solid #3e4e64;color:#d7e4f5;background:#233046;font-size:12px;font-weight:700;transition:transform .2s,background .2s}.btn:hover{transform:translateY(-1px);background:#2b3a54}.btn.primary{color:#0d281e;background:#a1f2bf;border-color:#a1f2bf}.btn.primary:hover{background:#c2fbd1}.btn.ghost{background:#19293caa}.btn.sm{padding:8px 11px;font-size:11px}.btn[disabled]{cursor:not-allowed;transform:none}.row{display:flex;align-items:center;gap:12px}.row-between{display:flex;justify-content:space-between;align-items:center;gap:15px}.section{margin-top:34px}.section-top{margin-bottom:18px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px}.eyebrow{font:600 10px 'DM Mono',monospace;letter-spacing:1.2px;color:#80a7b9}.section-title{font-size:21px;letter-spacing:-.6px;margin-top:6px}.link-text{color:#aceec4;background:transparent;border:0;font-size:12px}.link-text:hover{text-decoration:underline}.muted{color:var(--muted)}.tiny{font-size:11px}.mono{font-family:'DM Mono',monospace}.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:22px}.stat-card{border:1px solid var(--border);background:var(--card);border-radius:13px;padding:20px 22px;min-height:118px}.stat-top{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#8395b0}.stat-icon{font-size:17px;color:#99aecb}.stat-number{font-size:30px;font-weight:800;letter-spacing:-1.6px;margin-top:13px}.stat-unit{font-size:13px;color:#8ea1bb;margin-left:4px;font-weight:500}.stat-sup{font-size:10px;color:#a2efbb;margin-top:6px}.level-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px}.level-card{border:1px solid #344057;background:#171f32;border-radius:14px;padding:17px 16px;text-align:left;color:inherit;min-height:202px;position:relative;display:flex;flex-direction:column;overflow:hidden;transition:transform .2s,border-color .2s}.level-card:hover{transform:translateY(-3px);border-color:#92dfb1}.level-card:after{content:'';height:3px;position:absolute;left:0;right:0;bottom:0;background:var(--level);opacity:.8;transform:scaleX(.22);transform-origin:left;transition:transform .3s}.level-card:hover:after{transform:scaleX(1)}.level-card .level-num{font:500 10px 'DM Mono',monospace;color:var(--level);letter-spacing:1px}.level-card .level-large{font-size:32px;margin-top:20px;letter-spacing:-2px;font-weight:800}.level-card .level-name{font-size:12px;color:#cbd6e8;margin-top:7px;font-weight:600}.level-card .level-meta{font-size:10px;color:#7b8da9;margin-top:auto;padding-top:24px;display:flex;justify-content:space-between}.level-pbar{height:3px;border-radius:4px;background:#2b3952;margin-top:9px}.level-pbar span{height:100%;display:block;border-radius:4px;background:var(--level)}.split-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);gap:16px}.panel{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:22px}.panel-title{font-size:15px;font-weight:700;letter-spacing:-.2px}.panel-desc{font-size:12px;line-height:1.8;color:#9aaac3;margin-top:9px}.next-banner{display:flex;flex-direction:column;justify-content:space-between;gap:20px}.next-banner .small-label{color:#8f9db4;font-size:11px}.next-banner h3{font-size:21px;letter-spacing:-.6px;margin:9px 0}.next-banner p{font-size:12px;color:#a4b2c7;line-height:1.9}.next-banner .btn{align-self:start}.subpanel{background:linear-gradient(145deg,#1a3038,#1b2539);border:1px solid #2b5353}.tip-list{display:grid;gap:14px;margin-top:18px}.tip{display:flex;gap:13px;align-items:flex-start}.tip-number{width:25px;height:25px;background:#273c40;color:#adf5c7;border-radius:8px;font:600 11px 'DM Mono',monospace;display:grid;place-items:center;flex-shrink:0}.tip strong{display:block;font-size:12px}.tip p{font-size:11px;line-height:1.7;color:#9dacbf;margin-top:4px}.module-list{display:grid;gap:9px}.module-card{width:100%;background:#171f31;border:1px solid #2f3b50;display:flex;align-items:center;text-align:left;gap:13px;padding:15px 17px;border-radius:12px;color:#e7eeff;transition:background .2s,border-color .2s}.module-card:hover{border-color:#7dabac;background:#1d2c41}.module-code{color:#a2eabf;background:#263c45;border:1px solid #395c60;padding:8px 9px;font:600 11px 'DM Mono',monospace;border-radius:8px;flex-shrink:0}.module-main{flex:1;min-width:0}.module-main b{display:block;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.module-main p{font-size:11px;color:#8c9db5;margin-top:6px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}.module-tail{display:flex;align-items:center;gap:12px;color:#8da0bb;font-size:11px;flex-shrink:0}.done-dot{color:#a3efbe}.label-pill{font:600 10px 'DM Mono',monospace;display:inline-flex;align-items:center;padding:6px 9px;border:1px solid #405069;border-radius:6px;color:#aabbd3}.learning-header{padding-top:12px}.learning-header .meta{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px;color:#a3b2c7;font-size:11px}.learning-layout{display:grid;grid-template-columns:minmax(0,1fr) 288px;gap:24px;margin-top:25px;align-items:start}.content-stack{display:grid;gap:18px}.learn-card{background:#171f32;border:1px solid #344158;border-radius:16px;padding:28px 30px}.learn-card h2{font-size:19px;letter-spacing:-.5px}.learn-card .under-title{color:#92a1ba;font-size:12px;line-height:1.9;margin-top:10px}.concept-list{display:grid;gap:13px;margin-top:23px}.concept{background:#1b263a;border:1px solid #314258;padding:18px;border-radius:11px}.concept .num{font:600 10px 'DM Mono',monospace;color:#a3eabf;letter-spacing:.8px}.concept h3{font-size:14px;margin:9px 0 8px}.concept p{font-size:12px;line-height:2;color:#a5b5ca}.case-study{border-left:3px solid #b2efc2;background:#223340;line-height:2;padding:16px 20px;color:#bfcee0;border-radius:0 10px 10px 0;font-size:12px;margin-top:18px}.case-study b{color:#d9f7df}.code-block{background:#0b1220;border:1px solid #33455e;color:#c0edce;border-radius:10px;font:12px/1.9 'DM Mono',monospace;padding:17px 20px;white-space:pre-wrap;overflow:auto;margin:18px 0 0}.section-step{font-size:10px;letter-spacing:1px;color:#a7edc1;font-weight:700;margin-bottom:11px}.lab-tasks{display:grid;gap:10px;margin-top:21px}.task{display:flex;align-items:flex-start;gap:10px;padding:14px;background:#1c273b;border:1px solid #34435b;border-radius:10px;cursor:pointer;font-size:12px;color:#bfcce0;line-height:1.8}.task input{accent-color:#a1f2bf;margin:4px 0 0;flex-shrink:0}.task:has(input:checked){border-color:#447361;background:#1c3334}.deliverable{margin-top:21px;padding:15px;border:1px dashed #4c6b68;background:#1c3038;border-radius:10px;font-size:12px;color:#a7bccc}.deliverable strong{color:#afeac4}.quiz-options{display:grid;gap:10px;margin-top:17px}.option{display:flex;align-items:center;gap:11px;text-align:left;border-radius:9px;padding:13px 15px;border:1px solid #3c4b62;background:#202c41;color:#c9d6e9;font-size:12px;width:100%;line-height:1.7}.option:hover{border-color:#94e8b5}.option.selected{border-color:#a4ecc0;background:#213e3a}.option.correct{border-color:#60ba81;background:#1b4432}.option.wrong{border-color:#e08281;background:#472b38}.option-index{width:23px;height:23px;min-width:23px;border-radius:7px;background:#314057;display:grid;place-items:center;font:600 10px 'DM Mono',monospace}.result-box{background:#253a3d;border:1px solid #456965;border-radius:10px;color:#bce8c6;padding:14px;font-size:12px;line-height:1.9;margin-top:17px}.result-box.bad{background:#392b36;border-color:#79505d;color:#eac6c9}.quiz-hint{color:#8394ac;font-size:11px;margin-top:13px;line-height:1.8}.side-study{position:sticky;top:25px;display:grid;gap:14px}.study-panel{border:1px solid #35455d;background:#192337;border-radius:14px;padding:19px}.study-panel h3{font-size:13px}.study-panel p{font-size:11px;color:#92a6bc;line-height:1.8;margin-top:8px}.study-ring{position:relative;width:112px;height:112px;margin:17px auto;display:grid;place-items:center;border-radius:50%;background:conic-gradient(#a1edbf var(--pct),#314057 0)}.study-ring:after{content:'';position:absolute;width:84px;height:84px;background:#192337;border-radius:50%}.study-ring b{z-index:1;font-size:26px}.study-ring small{z-index:1;position:absolute;font-size:9px;color:#9aadbd;transform:translateY(20px)}.study-progress-text{font-size:10px;color:#8496ad;text-align:center}.lesson-mini-nav{display:grid;gap:5px;margin-top:14px}.lesson-mini-nav button{background:none;border:0;text-align:left;color:#a5b5cc;padding:8px;border-radius:7px;font-size:11px;display:flex;gap:8px}.lesson-mini-nav button:hover{background:#243249;color:#e1f8e7}.lesson-mini-nav .ok{color:#a1f2bf}.next-lesson{font-size:11px;padding:12px;border-radius:10px;background:#223247;border:1px solid #344960;color:#bdd3e1;display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer}.next-lesson:hover{background:#2b3a50}.notice{background:#1d2e3a;border:1px solid #335762;border-radius:11px;padding:15px 17px;color:#9abccb;font-size:12px;line-height:1.9}.notice strong{color:#c4eee0}.notice.warning{background:#3c2a29;border-color:#745544;color:#e6c1a4}.search-input{width:100%;border:1px solid #405069;background:#1b273a;color:#fff;border-radius:9px;outline:none;padding:12px 14px;font-size:12px}.search-input:focus{border-color:#a6e7b8}.filters{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.chip{background:#1e283b;color:#97a9c4;border:1px solid #35435a;border-radius:8px;padding:9px 12px;font-size:11px}.chip.active{background:#b5f1c9;color:#10271b;border-color:#b5f1c9}.roadmap-list{display:grid;gap:14px;margin-top:25px}.roadmap-item{display:grid;grid-template-columns:95px 1fr auto;align-items:center;gap:18px;border:1px solid #39455e;border-radius:15px;background:#172133;padding:22px 24px}.roadmap-big{font-size:37px;font-weight:800;letter-spacing:-2px}.roadmap-item h3{font-size:15px}.roadmap-item p{font-size:12px;line-height:1.8;color:#9eb0c6;margin-top:7px}.roadmap-tags{display:flex;gap:9px;margin-top:10px;flex-wrap:wrap}.roadmap-tags span{font-size:10px;color:#a4c3bf;background:#223940;border-radius:5px;padding:5px 8px}.resource-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;margin-top:24px}.resource{padding:22px;background:#172133;border:1px solid #344057;border-radius:13px;display:flex;gap:14px}.resource-icon{width:40px;height:40px;display:grid;place-items:center;background:#2a3a51;border-radius:11px;flex-shrink:0;font-size:20px;color:#b6ebcd}.resource h3{font-size:13px}.resource p{font-size:11px;line-height:1.8;color:#99a9be;margin:8px 0 12px}.resource a{font-size:11px;color:#b1eec6}.resource a:hover{text-decoration:underline}.utility-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:20px 0}.empty{padding:40px;text-align:center;border:1px dashed #40536b;color:#9cacc5;border-radius:12px;font-size:12px}.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,100px);opacity:0;pointer-events:none;background:#b7f4cf;color:#0e3220;box-shadow:0 15px 40px #0009;padding:13px 20px;border-radius:10px;z-index:100;font-size:12px;font-weight:700;transition:transform .25s,opacity .25s}.toast.show{opacity:1;transform:translate(-50%,0)}.scrim{display:none}.line{border:0;border-top:1px solid #37445a;margin:22px 0}.level-hero{border:1px solid #35465f;background:radial-gradient(circle at right top,#234e4e55,transparent 45%),#192337;border-radius:17px;padding:30px;margin-bottom:25px}.level-hero .h1{font-size:34px}.badge{font-size:10px;color:#b5f5ca;padding:5px 8px;border-radius:6px;border:1px solid #476c62;background:#27483e;font-weight:700}.assessment{margin-top:20px;border:1px solid #38534c;background:#1a2c31;border-radius:12px;padding:21px}.assessment h3{font-size:15px;margin-bottom:10px}.assessment p{font-size:12px;color:#a0b4c2;line-height:1.9}.assessment ul{font-size:12px;color:#b9cadd;line-height:2;padding-left:20px}.course-return{background:none;border:0;color:#b2eccc;font-size:12px;padding:0;margin:0 0 20px}.course-return:hover{text-decoration:underline}.icon-boost{font-size:16px;color:#a1f2bf}
+@media (max-width:1200px){.level-grid{grid-template-columns:repeat(3,1fr)}.hero-art{right:-45px;opacity:.43}.hero-text{max-width:620px}.learning-layout{grid-template-columns:minmax(0,1fr) 255px}.stat-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:1000px){.app-shell{grid-template-columns:220px 1fr}.sidebar{padding-left:10px;padding-right:10px}.brand-word b{font-size:13px}.page-content{padding-left:25px;padding-right:25px}.topbar{padding-left:25px;padding-right:25px}.learning-layout{grid-template-columns:1fr}.side-study{position:static;grid-template-columns:1fr 1fr}.hero{padding:30px}.hero-art{display:none}.stat-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:720px){.app-shell{display:block}.sidebar{position:fixed;left:0;top:0;bottom:0;z-index:40;width:282px;transform:translateX(-110%);transition:transform .25s;box-shadow:8px 0 32px #0008}.sidebar.open{transform:translateX(0)}.scrim.show{display:block;position:fixed;inset:0;background:#0009;z-index:35}.topbar{height:62px;padding:0 17px}.mobile-menu{display:block}.crumb{font-size:9px}.crumb>span:first-child{display:none}.crumb-divider{display:none}.top-save{display:none}.page-content{padding:21px 15px 40px}.site-footer{padding:15px;font-size:9px}.hero{padding:27px 22px;min-height:280px}.h1{font-size:32px;letter-spacing:-1.1px}.hero .h1{font-size:30px}.lede{font-size:12px}.hero-actions{margin-top:23px}.stat-grid{gap:9px;margin-top:14px}.stat-card{padding:16px;min-height:103px}.stat-number{font-size:25px}.level-grid{grid-template-columns:repeat(2,1fr)}.level-card{min-height:175px}.level-card .level-large{margin-top:13px}.split-grid,.resource-grid{grid-template-columns:1fr}.learn-card{padding:21px 18px}.learning-layout{margin-top:15px}.side-study{grid-template-columns:1fr}.roadmap-item{grid-template-columns:62px 1fr;gap:12px;padding:18px}.roadmap-item .btn{grid-column:2;justify-self:start}.roadmap-big{font-size:28px}.module-card{padding:13px 11px}.module-tail>span:first-child{display:none}.module-code{font-size:9px;padding:6px}.section{margin-top:27px}.section-title{font-size:18px}.site-footer>span:first-child{max-width:62%}}
+@media (max-width:390px){.level-grid{grid-template-columns:1fr 1fr}.level-card{padding:12px;min-height:165px}.level-card .level-large{font-size:27px}.brand{padding-bottom:23px}.hero .h1{font-size:27px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand" role="link" tabindex="0" data-action="home" aria-label="回到学习首页">
+        <div class="brand-mark"><span>R</span><i></i></div>
+        <div class="brand-word"><b>REA<span class="brand-space">/</span>ACADEMY</b><small>REVERSE ENGINEERING SCHOOL</small></div>
+      </div>
+      <div class="sidebar-section-label">WORKSPACE</div>
+      <nav class="primary-nav" aria-label="主导航">
+        <button class="nav-link" data-view="home"><span class="nav-ico">▦</span>学习总览 <span class="nav-end">↗</span></button>
+        <button class="nav-link" data-view="curriculum"><span class="nav-ico">▤</span>课程目录 <span class="nav-count">25</span></button>
+        <button class="nav-link" data-view="roadmap"><span class="nav-ico">◇</span>能力路线图</button>
+        <button class="nav-link" data-view="resources"><span class="nav-ico">⌘</span>工具与资源</button>
+      </nav>
+      <div class="sidebar-head"><span>LEARNING PATH</span><small>5 LEVELS</small></div>
+      <div id="sidebar-levels" class="sidebar-levels"></div>
+      <div class="side-footer">
+        <div class="mini-profile"><div class="avatar">M</div><div><b>My Learning Space</b><span>Local-first · 私有进度</span></div><span class="mini-arrow">⋯</span></div>
+        <div class="mini-progress"><div class="mini-progress-title"><span>总体完成度</span><b id="side-progress-label">0%</b></div><div class="progress-track"><span id="side-progress-bar"></span></div></div>
+        <button class="backup-btn" data-action="export">↧ 导出学习记录</button>
+      </div>
+    </aside>
+
+    <div class="main-wrap">
+      <header class="topbar">
+        <button class="mobile-menu icon-button" data-action="menu" aria-label="打开菜单">☰</button>
+        <div class="crumb"><span>FULL-STACK ENGINEER PLAN</span><span class="crumb-divider">/</span><strong id="crumb-name">学习总览</strong></div>
+        <div class="top-actions"><span class="live-dot"></span><span class="top-save">进度自动保存在本机</span><button class="icon-button" data-action="export" title="导出进度" aria-label="导出学习进度">⇩</button></div>
+      </header>
+      <div class="page-content" id="page-content" tabindex="-1"></div>
+      <footer class="site-footer"><span>REA ACADEMY <span class="footer-sep">/</span> 2026 · Independent learning curriculum</span><span>@马星克 Maxink</span></footer>
+    </div>
+  </div>
+  <div class="scrim" id="scrim"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <input type="file" id="import-file" hidden accept="application/json,.json" />
+  <script>
+// REA Academy v1 · course content uses original educational examples and public documentation.
+const LEVELS = [
+  {id:1,name:'逆向基础',en:'Foundation',role:'Starter',duration:'8h',color:'#4D79E8',mission:'从零理解 REA，建立可重跑的分析环境与证据意识。',capstone:'在自建 JavaScript 小项目上完成一次本地分析并保留证据。',deliver:'环境报告 · 分析结果 · 风险边界',threshold:70},
+  {id:2,name:'Web 取证',en:'Web Investigator',role:'Investigator',duration:'12h',color:'#13A78B',mission:'看懂网页、接口、前端规则与业务状态，把观察变成规格。',capstone:'分析一个授权测试站点的「项目关闭」功能并生成验收包。',deliver:'功能矩阵 · 字段字典 · API 契约 · 测试用例',threshold:75},
+  {id:3,name:'应用分析',en:'Application Engineer',role:'Engineer',duration:'12h',color:'#8A72F9',mission:'研究 JS / Electron / .NET 结构，找到具体功能的模块与调用路径。',capstone:'分析自建 Electron 搜索功能，独立复现并测试。',deliver:'模块图 · 函数追踪 · 代码 · 自动测试',threshold:80},
+  {id:4,name:'高级逆向',en:'Advanced Analysis',role:'Specialist',duration:'14h',color:'#D68A42',mission:'理解二进制、移动端与运行时证据，正确选择专业分析引擎。',capstone:'分析一个合法使用的开源原生或 Android 示例，写出函数/行为证据报告。',deliver:'二进制概览 · 调用图 · 假设验证报告',threshold:85},
+  {id:5,name:'逆向架构师',en:'AI Reverse Engineering Architect',role:'Architect',duration:'12h',color:'#E16088',mission:'将取证、分析、开发和验收组成可复用的 Agent 工厂。',capstone:'Gllue Local 试点：检索候选人 → 记录沟通 → 更新信息 → 变更招聘阶段。',deliver:'Playbook · Evidence Registry · E2E 报告 · 项目复盘',threshold:90},
+];
+
+const COURSES = [
+{
+ id:'1-1',level:1,title:'逆向工程第一性原理',minutes:65,tag:'思维模型',intro:'逆向工程从「结果」倒推「可能的机制」，它提供证据与解释，而不是保证拿回开发者原始代码。',
+ concepts:[
+ ['黑盒与白盒','黑盒只能观察输入、输出与可见行为；白盒拥有源码或内部结构。实际项目往往是灰盒：能看见网页脚本，却看不见私有后端。'],
+ ['静态与动态','静态分析不运行目标：阅读程序文件、依赖和符号；动态分析观察真实执行过程、网络和状态变化。两种证据要相互印证。'],
+ ['Decompile → Understand → Recreate','先提取可读线索，再沿证据解释功能，最后针对自己的技术栈独立实现。反编译的伪代码不等于原始源码。']
+ ],example:'场景：看见「关闭项目」按钮。黑盒能观察弹窗与保存后的状态；静态分析可能发现状态枚举；真正的服务端保存逻辑仍需单独验证。',lab:['为一个常用应用列出 3 个可观察行为','分别标注每个行为属于静态/动态/未知证据','写一句话解释为何「页面可见」不等于「后端已知」'],deliver:'一页黑盒/灰盒/白盒证据对照表',quiz:{q:'REA 分析一套应用后，哪个结论最可靠？',options:['必然恢复原始源码','能形成有来源、有边界的行为和结构分析','一定能读取云端私有数据库'],a:1,why:'REA 的设计强调可复查证据，不声称自动克隆应用或恢复原始源码。'}
+},
+{
+ id:'1-2',level:1,title:'本地环境与安全安装',minutes:95,tag:'环境配置',intro:'先诊断，再安装。工具链的版本、系统和权限边界，决定后续分析是否可信。',
+ concepts:[
+ ['运行要求','按官方 README 核验 macOS、Linux、Windows 的支持范围，以及 Node.js 最低版本；Windows 原生分析支持有实验性限制。'],
+ ['Dry-run 原则','先看会更改哪些 MCP/Skill 配置和外部依赖；审查官方来源、执行权限、备份与回滚方法。'],
+ ['Doctor','使用 doctor 与 capabilities/providers 等诊断输出判断核心 CLI、Agent 注册与可选原生引擎是否就绪。']
+ ],example:'建议只在自建测试环境执行：node -v；npx -y rea-agents@latest doctor --json。安装前先人工审阅当前发行版与依赖。',code:'node -v\nnpx -y rea-agents@latest doctor --json\nnpx -y rea-agents@latest setup --dry-run',lab:['记录系统与 Node 版本','检查 REA 官方发行信息与 setup dry-run','把计划修改的文件路径写入配置备份清单'],deliver:'environment-baseline.md 与 setup-dry-run.txt',quiz:{q:'正式接入 REA 前，最重要的第一步是什么？',options:['直接在生产环境全局安装','先检查版本、权限及配置变更计划','把所有 Agent 配置删掉重装'],a:1,why:'先形成可回滚的基线，才能避免污染原有工作台。'}
+},
+{
+ id:'1-3',level:1,title:'CLI、MCP 与 Skill',minutes:100,tag:'Agent 集成',intro:'把「工具在哪里运行」与「Agent 如何调用它」拆开理解，才能排查集成问题。',
+ concepts:[
+ ['CLI','命令行接口由操作系统终端调用，适合脚本化和本地分析。'],
+ ['MCP','Model Context Protocol 将可调用能力暴露给兼容客户端；MCP 注册正确不代表目标分析 provider 一定可用。'],
+ ['Skill','Skill 告诉 Agent 何时使用、怎样组合工具。它是使用策略，不是底层分析引擎。']
+ ],example:'WorkBuddy 负责制定任务；Codex 通过 MCP / CLI 调用 REA；REA 输出证据，然后再交给 Codex 编码。',code:'npx -y rea-agents@latest setup\nnpx -y rea-agents@latest doctor --json',lab:['画出 WorkBuddy → Codex → REA 的调用路径','列出 MCP 未注册与 Provider 未就绪的区别','定义一次 CLI 调用成功的验收条件'],deliver:'integration-map.md',quiz:{q:'仅复制 REA Skill 文件，是否保证 MCP 工具已经可调用？',options:['是','否，还需检查注册与实际调用','只有 Windows 需要检查'],a:1,why:'Skill、MCP 注册、分析引擎就绪是不同的验收环节。'}
+},
+{
+ id:'1-4',level:1,title:'能力目录与工具选型',minutes:85,tag:'Tooling',intro:'逆向工具按目标格式选型，而不是每看到一个软件就调用最重的二进制工具。',
+ concepts:[
+ ['输入类型','先分清 URL、网页捕获、JS 项目、Electron 包、.NET 程序、APK、原生 PE/ELF/Mach-O。'],
+ ['Provider','REA 会通过不同分析器处理目标；Hopper/Ghidra 面向某些原生二进制任务，普通 JavaScript 不需要先装它们。'],
+ ['最小充分工具','工具越重，安装成本、误差、运行权限和证据维护成本通常越高。先做低风险、可解释的分析。']
+ ],example:'谷露 SaaS URL → 先浏览器观察与 Network；自建 Electron App → 结构/资源分析；本地原生程序 → 原生 Provider。',lab:['为 URL / JS / APK / EXE 各匹配最合适的入口','解释何时不应使用 Hopper','设计一个工具失败时的降级方案'],deliver:'tool-selection-matrix.md',quiz:{q:'分析一个普通 JavaScript 项目，应该先做什么？',options:['购买原生反编译器','读取结构、依赖与可用 Source Map','直接猜测私有后端数据库'],a:1,why:'JS 结构分析往往比原生二进制反编译更直接。'}
+},
+{
+ id:'1-5',level:1,title:'证据语言与授权边界',minutes:75,tag:'Evidence',intro:'高质量逆向分析的底层资产不是截图数量，而是每个结论都能追溯到可信证据。',
+ concepts:[
+ ['Observed','亲自从授权环境中看到的页面/请求/测试行为；保存时间、步骤、上下文与版本。'],
+ ['Inferred / Unknown','静态代码线索与模型解释通常只是推断；没有证据支持的部分应标为 Unknown，并明确下一次实验。'],
+ ['最小数据与授权','只分析自己有权访问的目标，避免抓取候选人真实个人资料、Cookie、Token；不可绕过登录或拷贝受保护源码。']
+ ],example:'「前端限制 20 字」是 OBSERVED；「服务端也限制 20 字」仍是 UNKNOWN，直到有授权测试响应证明。',lab:['给 5 条混合陈述标注 OBSERVED / INFERRED / UNKNOWN','为每条证据指定 ID、来源和时间','列出测试数据脱敏与退出条件'],deliver:'evidence-ledger.csv',quiz:{q:'浏览器有必填提示，就能断言后端也有同样规则吗？',options:['能','不能，必须另行验证','只有使用 Chrome 时能'],a:1,why:'前端行为不能替代服务端的独立证据。'}
+},
+{
+ id:'2-1',level:2,title:'Web 观察与 CDP 探针',minutes:130,tag:'Web',intro:'把页面操作转成可复跑的实验，让每次点击都能追踪输入、状态和输出。',
+ concepts:[
+ ['页面状态','记录 URL、DOM、可见文本、交互控件、禁用态、错误提示和是否需要登录。'],
+ ['CDP / Playwright','CDP 是调试协议，Playwright 可以封装可重复的点击、等待、断言和网络记录。'],
+ ['状态覆盖','正常、空值、边界值、无权限、重复操作和撤销操作，构成最小行为测试矩阵。']
+ ],example:'对关闭项目弹窗记录打开前状态、可选原因、按钮是否置灰以及提交后列表状态。',lab:['在自建测试站完成一次浏览器取证','记录 DOM 截图与事件步骤','用 Playwright 对关闭弹窗写可重复测试'],deliver:'web-observation.md + screenshot',quiz:{q:'只有一张表单截图时，哪些信息通常尚未被验证？',options:['控件大致布局','提交成功后的持久化和错误路径','页面上显示的字段名称'],a:1,why:'静态截图不能证明交互规则与持久化结果。'}
+},
+{
+ id:'2-2',level:2,title:'Network 与 API 契约',minutes:145,tag:'Network',intro:'把请求日志转为可供开发和测试使用的接口契约，不要把 HTTP 层成功误读成业务成功。',
+ concepts:[
+ ['请求结构','Method、Path、Query、Headers、Body、Status、响应 Schema 与调用时机。'],
+ ['业务语义','200 不一定是业务成功，4xx 也需区分认证、校验和资源状态错误。'],
+ ['敏感信息','HAR 可能含 Authorization、Cookie、个人资料与租户 ID；分享前必须脱敏并限定保存范围。']
+ ],example:'POST /projects/{id}/close 的响应可能返回 ok:false；记录成功/失败的语义必须检查响应体和页面状态。',lab:['在自建 API 上抓取成功与失败响应','整理最小的 Request/Response Schema','设计脱敏保存 HAR 的检查表'],deliver:'api-contract.md',quiz:{q:'HTTP 返回 200，而 JSON body 为 {ok:false}，你应该记录什么？',options:['业务成功','HTTP 成功但业务失败','不记录'],a:1,why:'HTTP 状态和业务状态需要分开判定。'}
+},
+{
+ id:'2-3',level:2,title:'JavaScript Bundle 与路由追踪',minutes:145,tag:'JavaScript',intro:'理解生产前端常被打包、压缩和分块的原因，追踪一条功能从页面到请求的线索。',
+ concepts:[
+ ['Bundle / Chunk','框架可能将代码拆成动态 Chunk，源码名称可能丢失；仅凭文件名猜业务是不可靠的。'],
+ ['Source Map','Source Map 在可用时可以辅助恢复映射，但不存在或失效时不能假装已有源码。'],
+ ['事件追踪','从按钮事件、状态管理到 API Client、请求入口形成一张调用和证据图。']
+ ],example:'搜索项目关闭按钮绑定的 handler，找到状态枚举与请求构造器后，用真实交互验证其运行路径。',lab:['用自建 Vite 网站生成压缩 Bundle','对比有/无 Source Map 的分析体验','写出一条按钮到 fetch 的函数链'],deliver:'feature-trace.md',quiz:{q:'静态代码中出现某个 API 调用，是否证明用户这次操作会触发它？',options:['一定会','不一定，要结合运行时证据','只有代码压缩后才会'],a:1,why:'静态可达路径不等于实际执行路径。'}
+},
+{
+ id:'2-4',level:2,title:'业务规则与状态机',minutes:135,tag:'Workflow',intro:'把模糊的流程描述转为状态、事件、前置条件、转移与异常处理。',
+ concepts:[
+ ['状态机','定义状态集合、允许事件与转移；识别不可逆操作和回退动作。'],
+ ['决策表','将角色、状态、字段条件映射到是否允许提交及应显示的错误。'],
+ ['端到端断点','页面能点不代表业务完成；还要验证任务、主表与关联记录的一致性。']
+ ],example:'项目 OPEN → CLOSED 需要原因；CLOSED → OPEN 需要重开动作；「再次关闭」应形成明确结果。',lab:['画一张项目关闭/开启状态机','写 6 行边界情形决策表','标注哪些规则仍需补证'],deliver:'state-machine.md + decision-table.csv',quiz:{q:'状态机的「转移条件」用于说明什么？',options:['UI 颜色','在什么条件下允许从状态 A 进入状态 B','数据库一定有几张表'],a:1,why:'转移条件将业务规则变成可验证的行为要求。'}
+},
+{
+ id:'2-5',level:2,title:'规格复原与 E2E 验收',minutes:165,tag:'Acceptance',intro:'从「我看见了」走向「别人可以复验」，必须实现证据、需求、代码和测试的双向映射。',
+ concepts:[
+ ['功能矩阵','按 Feature ID 记录功能、输入输出、角色、证据来源、实现状态与测试覆盖。'],
+ ['契约与追踪','规则应映射到 API、字段、验证用例及差异；未知项不能悄悄变成默认需求。'],
+ ['Golden Cases','使用一套稳定的授权测试样例，同时运行原站观察与本地实现，比较预期状态。']
+ ],example:'F-JOB-003「关闭项目」→ EV-305 状态线索 → SPEC-033 条件 → TEST-JOB-006 重复关闭测试。',lab:['为一个业务功能完成证据映射','开发至少 5 个 E2E 测试','提交原站与本地差异报告'],deliver:'traceability-matrix.csv + e2e-report.html',quiz:{q:'哪种证据足以宣布一条业务链路闭合？',options:['页面能打开','表和 API 已创建','成功与失败路径、状态持久化、关键关联均通过验收'],a:2,why:'闭环以行为和持久化的证据为准，而不是文件/表数量。'}
+},
+{
+ id:'3-1',level:3,title:'应用包格式与资源清单',minutes:120,tag:'Artifacts',intro:'学会从交付物反推资源组织方式，优先识别入口与模块，而非无目标地翻遍所有文件。',
+ concepts:[
+ ['ASAR / ZIP','Electron 通常把应用代码、静态资源封入 ASAR；需要区分打包文件与原生 Add-on。'],
+ ['Manifest','从元数据理解入口点、版本、平台、权限与依赖，记录哈希确保分析对象未变化。'],
+ ['可执行与资产','资源文件、前端 JS、共享库与原生二进制应分开处理。']
+ ],example:'自建 Electron App：检查 package.json 的 main 入口，再把 renderer JS、preload 和资源分组。',lab:['构建一个测试 Electron 包','输出目录、入口和文件类型列表','记录 SHA-256 与分析版本'],deliver:'artifact-inventory.json',quiz:{q:'Electron 的 ASAR 通常主要用于什么？',options:['将应用资源和脚本打包','作为云端数据库','模拟 TCP 请求'],a:0,why:'ASAR 是 Electron 常见的应用资源归档格式。'}
+},
+{
+ id:'3-2',level:3,title:'依赖图与 Feature Trace',minutes:155,tag:'Trace',intro:'从全量代码清单收敛到与具体功能相关的少数模块和证据。',
+ concepts:[
+ ['Module Graph','Import 关系揭示静态依赖，但不会自动说明真实执行频率。'],
+ ['Feature Trace','从用户触发点、状态、业务服务与存储入口追踪一条完整路径。'],
+ ['证据分层','静态分析结果需要 runtime 观察或测试验证，尤其是多条件分支。']
+ ],example:'搜索「收藏」功能时，定位 renderer 的事件，追踪共享 service 和持久化 adapter。',lab:['给自建 JS 项目绘制依赖图','追踪一个功能的 4 个模块节点','写出无法确定的分支及验证策略'],deliver:'feature-dependency-graph.md',quiz:{q:'Module Graph 能直接证明什么？',options:['所有分支每次都会运行','源码中可分析到的静态依赖关系','服务器从不报错'],a:1,why:'静态依赖不能代替运行时路径证据。'}
+},
+{
+ id:'3-3',level:3,title:'Electron 的 Main / Renderer / Preload',minutes:135,tag:'Electron',intro:'理解 Electron 进程边界与 IPC，才能正确判断数据从前端进入本机能力的位置。',
+ concepts:[
+ ['Main Process','主进程管理应用生命周期、本机资源与窗口。'],
+ ['Renderer','渲染进程承载 UI；安全设计中不应把所有本机能力直接暴露给不可信网页。'],
+ ['Preload / IPC','preload 可提供有限桥接 API，IPC 负责跨进程通信；还要检查权限验证。']
+ ],example:'renderer 调用 window.api.search() → preload 转发 IPC → main 读取本地索引并返回。',lab:['构建三层 Electron 最小示例','画出一次搜索 IPC 数据流','检查输入校验与权限边界'],deliver:'electron-architecture.md',quiz:{q:'Electron 中 Renderer 调用本机功能的常见安全路径是？',options:['Renderer → Preload → IPC → Main','Renderer → CSS → OS Kernel','没有进程边界'],a:0,why:'隔离渲染进程并经受控 IPC 暴露本机功能，是常见的设计模式。'}
+},
+{
+ id:'3-4',level:3,title:'.NET Assembly 与 CIL',minutes:120,tag:'.NET',intro:'托管程序与原生程序在结构和分析方法上不同。先识别元数据与中间语言，再阅读方法之间的关系。',
+ concepts:[
+ ['程序集元数据','Assembly 通常携带类型、方法及引用元数据，可用于建立结构轮廓。'],
+ ['CIL / IL','托管代码可能编译为中间语言；反编译视图只是辅助理解的重建表示。'],
+ ['NativeAOT','并非所有 .NET 程序都适合 IL 分析：NativeAOT 和混合模式存在不同边界。']
+ ],example:'对自己编译的 HelloWorld 程序，对照 C# 源码、IL 指令与反编译结果。',lab:['编译一个简单 .NET 项目','记录方法签名与调用','列出托管与原生分析差异'],deliver:'dotnet-analysis-notes.md',quiz:{q:'反编译器生成的 C# 风格代码，应该怎样使用？',options:['当作原作者完全相同的源码','作为需复核的语义重建','当作数据库文件'],a:1,why:'名称、控制流和优化都可能与原代码不同。'}
+},
+{
+ id:'3-5',level:3,title:'Evidence → 独立实现',minutes:190,tag:'Recreate',intro:'把分析结果转成可以实现和验收的需求，不把别人的受保护代码原样复制到新工程。',
+ concepts:[
+ ['Evidence-first PRD','每个关键需求都标注来源、适用范围、测试条件及未决假设。'],
+ ['独立实现','依据观察到的公开行为与合法分析结论，使用自己的框架、命名和组件实现。'],
+ ['差异驱动迭代','用错误案例和回归测试决定下一轮优先级，而非凭代码生成量衡量进度。']
+ ],example:'实现自建 Electron 搜索：搜索栏、结果过滤、空结果、持久化历史、错误提示。',lab:['写出基于证据的功能 PRD','独立开发功能并运行测试','形成差异清单与修复回归记录'],deliver:'implementation-recap.md + tests',quiz:{q:'Agent 写完代码后，哪一步能降低「看起来像但行为不对」风险？',options:['只看代码行数','运行 Golden Cases 并检查差异','增加首页动画'],a:1,why:'运行可重复的行为验证，才能判断真实一致性。'}
+},
+{
+ id:'4-1',level:4,title:'二进制语言与文件格式',minutes:125,tag:'Binary',intro:'建立足够理解专业逆向工具的机器层模型，而不是死记汇编指令。',
+ concepts:[
+ ['PE / ELF / Mach-O','Windows、Linux、macOS 常见可执行格式，节、段、导入、符号的组织各不相同。'],
+ ['ISA 与 ABI','CPU 指令集决定机器指令语义，ABI 定义参数传递、调用约定及栈等约束。'],
+ ['符号与地址','编译优化和符号剥离会让源码函数难以一对一重建。']
+ ],example:'对自己编译的 C 程序比较 Debug/Release 下的函数数量、符号和控制流。',lab:['识别一个开源测试二进制的格式和架构','标注入口、导入项与符号可见性','对比优化前后差异'],deliver:'binary-inventory.md',quiz:{q:'为什么反编译伪代码不一定等于原始源码？',options:['编译优化与符号丢失','所有反编译器会随机构造代码','所有程序都用同一种 ABI'],a:0,why:'从机器码到高级语言的映射通常不是唯一的。'}
+},
+{
+ id:'4-2',level:4,title:'Ghidra / Hopper 与调用图',minutes:235,tag:'Native',intro:'掌握函数清单、交叉引用和控制流，理解 REA 如何协调本地原生分析 Provider。',
+ concepts:[
+ ['Function Inventory','提取函数、字符串、导入导出、伪代码和汇编窗口，逐步收敛目标。'],
+ ['Call Graph / Xref','Callers/Callees 与交叉引用帮助定位某一行为影响的代码路径。'],
+ ['Provider 限制','Ghidra 与 Hopper 的支持版本、平台和许可不同；诊断显示 ready 才能运行相应深度功能。']
+ ],example:'使用开源 C 小工具分析一个输入解析函数，比较函数调用者与被调用者。',lab:['在合法测试程序中定位字符串引用','查看目标函数的调用关系','对伪代码与测试结果进行交叉验证'],deliver:'function-dossier.md',quiz:{q:'想从一个函数追踪「谁调用了它」，哪个线索最直接？',options:['Cross References / Callers','网页 CSS','HTML Meta Description'],a:0,why:'交叉引用与调用图专门记录代码之间的引用和调用线索。'}
+},
+{
+ id:'4-3',level:4,title:'动态证据与执行路径',minutes:135,tag:'Runtime',intro:'静态存在不代表实际触发；用受控实验把「有这段代码」与「这段代码运行了」区分开。',
+ concepts:[
+ ['受控环境','使用隔离样本、低权限运行和无敏感信息的输入，确保实验可恢复。'],
+ ['执行证据','运行时日志、事件序列和进程行为可以辅助确认具体路径。'],
+ ['因果与相关','网络请求和某次 UI 点击同时出现，不代表存在一条明确的直接调用关系。']
+ ],example:'设置两组输入触发不同分支，对比日志与返回值，而非仅阅读 if 条件。',lab:['构造可控制的双分支测试程序','记录各分支的观察证据','标注静态可达但未触发的路径'],deliver:'runtime-experiment.md',quiz:{q:'一个函数静态存在于应用里，意味着用户每次操作都会调用吗？',options:['意味着','不意味着，需要执行证据','只有原生应用才意味着'],a:1,why:'代码存在不等于执行，动态证据需要独立采集。'}
+},
+{
+ id:'4-4',level:4,title:'Android APK 与 Flutter',minutes:160,tag:'Mobile',intro:'从 Android 包体理解应用清单、Dex、资源和本地库，并识别跨平台框架的特殊边界。',
+ concepts:[
+ ['APK / Manifest','分析 APK 资源、权限声明、组件配置等静态证据。'],
+ ['Dex 与 JNI','Java/Kotlin 逻辑可在 Dex 内，native 代码可能位于 .so 库；不同形式使用不同工具。'],
+ ['Flutter','Flutter 应用可能采用不同于传统 Android 的代码组织和编译方式，不能套用单一 Dex 逆向流程。']
+ ],example:'分析自行构建的演示 APK，映射「打开设置页面」所涉及的 Activity 与资源。',lab:['列出应用清单与声明权限','追踪一个资源或入口组件','明确声明权限与实际调用之间的证据差异'],deliver:'android-structure-map.md',quiz:{q:'Manifest 声明某权限是否证明应用实际用过它？',options:['是','否，需要运行时或代码路径证据','只要有图标就证明'],a:1,why:'声明权限不等于实际调用。'}
+},
+{
+ id:'4-5',level:4,title:'特殊格式与网络证据',minutes:185,tag:'Specialty',intro:'掌握 WASM、SQLite、PCAP、固件与 EVM 方向的选型边界，成为能选择工具的分析工程师。',
+ concepts:[
+ ['WASM / SQLite','WASM 有自己的模块和指令结构；SQLite 文件用于本地数据结构研究，但必须确保有访问授权。'],
+ ['PCAP / 协议','网络捕获侧重数据包与协议层事实，不能凭数据包直接推断完整业务意图。'],
+ ['Firmware / EVM','固件与链上合约字节码需要不同解析器，切忌把单一工具描述为万能。']
+ ],example:'对自建 SQLite 测试库记录表结构，再与应用实际写入行为对照。',lab:['为 5 种文件格式选合适的分析路线','分析一个脱敏的 SQLite 测试库','列出两类不可从静态文件确认的运行时结论'],deliver:'specialty-routing-table.md',quiz:{q:'拿到 SQLite 文件后，能否直接证明某业务规则每次都执行？',options:['能','不能，库结构与运行时行为不同','只要有主键就可以'],a:1,why:'存储结构不包含所有业务执行条件。'}
+},
+{
+ id:'5-1',level:5,title:'Multi-Agent 任务编排',minutes:125,tag:'Orchestration',intro:'让 Agent 专注不同职责，明确写入所有权和依赖关系，减少重复分析与并发冲突。',
+ concepts:[
+ ['任务 DAG','把采集、分析、规格、开发、验收建成有前置条件的任务图。'],
+ ['MapReduce','可对互不依赖的页面/模块并行取证，再将证据统一去重与归并。'],
+ ['写入隔离','相同文件或数据库 schema 尽量采用单写入者、独立分支、合并校验。']
+ ],example:'Probe Agent 扫描不同模块；Spec Agent 汇总证据；Build Agent 按批准的契约开发；QA Agent 回归。',lab:['将谷露 9 段业务链拆成并行与串行任务','设计 Evidence Owner 与 Code Owner','写冲突合并规则'],deliver:'agent-task-dag.md',quiz:{q:'两个 Agent 同时修改同一个字段字典时，最有效的治理是？',options:['让后提交者直接覆盖','指定写入者并实施合并前校验','删除两人的证据'],a:1,why:'隔离与校验能降低并发污染和规格漂移。'}
+},
+{
+ id:'5-2',level:5,title:'Evidence Registry 与置信度',minutes:135,tag:'Registry',intro:'用结构化事实管理整个项目的认知成本，让每个结论拥有来源、时间、状态及下一步验证方式。',
+ concepts:[
+ ['统一 Evidence ID','证据需要关联来源、版本、操作者、观察步骤、哈希及敏感信息状态。'],
+ ['质量门控','OBSERVED、INFERRED、UNKNOWN 清楚标记，变更前进行冲突与重复检查。'],
+ ['覆盖率分母','功能数量、已验证规则数量、可跑通业务链路数量是不同口径；不可合并成一个模糊进度。']
+ ],example:'已观察到 20 个前端字段，但 5 个后端校验仍未知，则报告规则覆盖率时须写清分母和验证层级。',lab:['为 5 条测试证据生成统一 ID','构建证据状态与冲突校验','算一次真实「已验证规则 / 全部关键规则」'],deliver:'evidence-registry.json',quiz:{q:'取证定案率 80%，是否意味着产品复刻完成 80%？',options:['是','不一定，两者分母与验收对象不同','只要页面多就成立'],a:1,why:'取证、开发与交付验收必须使用不同口径。'}
+},
+{
+ id:'5-3',level:5,title:'Golden Cases 与一致性验证',minutes:140,tag:'QA',intro:'从「截图像」升级成「行为一致」，以覆盖真实业务目标的输入、输出和状态来判断价值。',
+ concepts:[
+ ['Golden Cases','事先固定用例、测试数据、执行步骤和预期结果，再比较原站与本地系统。'],
+ ['行为一致性','同时测正常路径、错误路径、数据持久化、权限状态与跨页面关联。'],
+ ['Diff Loop','发现差异后回到证据分析，修正规格或实现，再运行回归测试。']
+ ],example:'候选人从「已推荐」移动到「面试」，应验证阶段、时间轴、待办任务、页面刷新后状态一致。',lab:['为候选人阶段变更写至少 8 条用例','定义关键行为 Pass/Fail 规则','形成差异与回归结果'],deliver:'golden-cases.yaml + diff-report.md',quiz:{q:'页面截图相似，但刷新后记录消失，应该如何判定？',options:['通过','未完成闭环','只要动画正常就通过'],a:1,why:'业务状态持久化属于端到端验收的重要条件。'}
+},
+{
+ id:'5-4',level:5,title:'CI、沙箱与工程治理',minutes:115,tag:'Operations',intro:'让一次成功的分析与开发可以被未来的 Agent、团队和自己稳定复现。',
+ concepts:[
+ ['环境锁定','固定分析器版本、输入哈希、依赖和诊断状态，形成可重跑基线。'],
+ ['CI 与回归','自动跑静态校验、字段契约、单测、E2E，避免证据回写污染模型。'],
+ ['权限与成本','最小权限、私有凭据、无生产写入；付费/不可逆动作需要明确授权。']
+ ],example:'谷露字段字典曾出现重复字段；可在 Spec Agent 回写后即时执行结构校验阻止污染进入代码。',lab:['设计一组文档/字段校验门','为关键步骤写失败回滚规则','列出日志中需脱敏的 5 种信息'],deliver:'ci-gates.md',quiz:{q:'怎样防止 Agent 回写字段字典导致重复字段？',options:['先合并后发现','回写后自动运行结构校验并拒绝冲突','停止记录证据'],a:1,why:'质量门控应发生在变更进入主干之前。'}
+},
+{
+ id:'5-5',level:5,title:'毕业项目：Gllue 本地闭环',minutes:205,tag:'Capstone',intro:'用实际业务价值检验架构能力：有证据地分析、独立实现、跑通测试、承认未覆盖部分。',
+ concepts:[
+ ['目标分解','从人才检索到沟通记录，再到候选人信息更新和招聘阶段变更，分清 P0 主线和 P2 工具优化。'],
+ ['全链路产物','Feature Matrix → Evidence Registry → API/Data Contract → Code → E2E → Gap Report。'],
+ ['退出标准','零越权、关键测试通过、保存可重跑证据；仍然 Unknown 的规则以风险台账交付。']
+ ],example:'使用脱敏候选人测试数据：查询 → 选人 → 记录沟通 → 修改联系方式模拟字段 → 变更阶段 → 重新打开验证。',lab:['产出一个可运行的本地工作台业务闭环','跑通至少 10 条 Golden Cases','发布结构化证据与差异复盘'],deliver:'graduation-pack.zip + project-readme.md',quiz:{q:'L5 最重要的毕业标准是什么？',options:['工具越多越好','工作流可重跑、关键业务闭合且每个断言有证据','生成最多的代码行数'],a:1,why:'目标是可验证的业务价值和可复用的工程能力。'}
+}
+];
+
+  </script>
+  <script>
+/* REA Academy — no backend, login, telemetry or third-party state sharing. */
+const STORE_KEY = 'rea_academy_progress_v1';
+const ids = COURSES.map(c=>c.id);
+const defaultState = {completed:[],answers:{},tasks:{},last:'1-1'};
+function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE_KEY)||'{}');return {completed:Array.isArray(s.completed)?s.completed.filter(id=>ids.includes(id)):[],answers:typeof s.answers==='object'&&s.answers?s.answers:{},tasks:typeof s.tasks==='object'&&s.tasks?s.tasks:{},last:ids.includes(s.last)?s.last:'1-1'};}catch{return {...defaultState}}}
+let state=loadState();let filterLevel=0;let searchTerm='';let toastTimer;
+const el=id=>document.getElementById(id);
+const course=id=>COURSES.find(c=>c.id===id);
+const level=id=>LEVELS.find(l=>l.id===Number(id));
+const done=id=>state.completed.includes(id);
+const doneIn=levelId=>COURSES.filter(c=>c.level===Number(levelId)&&done(c.id)).length;
+const pct=(a,b)=>b?Math.round(a/b*100):0;
+const progress=pct(state.completed.length,COURSES.length);
+const h=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify(state))}catch(e){console.warn("Local storage unavailable; progress is session-only",e)}updateSidebar()}
+function route(to){window.location.hash=to;render();el('sidebar').classList.remove('open');el('scrim').classList.remove('show');window.scrollTo(0,0)}
+function routeFromHash(){return decodeURIComponent(location.hash.slice(1))||'home'}
+function toast(msg){const t=el('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2700)}
+function sidebarHTML(){return LEVELS.map(l=>`<button class="side-level" data-route="level/${l.id}" data-level-nav="${l.id}"><span class="side-level-number">L${l.id}</span><span><strong>${l.name}</strong><small>${doneIn(l.id)}/5 · ${l.role}</small></span><span class="level-dot">${doneIn(l.id)===5?'✓':'›'}</span></button>`).join('')}
+function updateSidebar(activeRoute){
+ el('sidebar-levels').innerHTML=sidebarHTML();
+ const count=state.completed.length;el('side-progress-label').textContent=`${pct(count,25)}%`;el('side-progress-bar').style.width=`${pct(count,25)}%`;
+ const r=activeRoute||routeFromHash();
+ document.querySelectorAll('.nav-link').forEach(n=>n.classList.toggle('active',n.dataset.view===r));
+ const lid=/^(?:level\/|lesson\/)(\d+)/.exec(r);
+ if(lid)document.querySelector(`[data-level-nav="${lid[1]}"]`)?.classList.add('active');
+}
+function badge(l){return `<span class="badge">L${l.id} · ${l.name}</span>`}
+function stats(){const count=state.completed.length;let labs=0;COURSES.forEach(c=>{const v=state.tasks[c.id]||[];labs+=v.filter(Boolean).length});const examined=COURSES.filter(c=>Number.isInteger(state.answers[c.id])).length;return `<div class="stat-grid">
+ <div class="stat-card"><div class="stat-top"><span>课程总量</span><span class="stat-icon">▦</span></div><div class="stat-number">25<span class="stat-unit">课</span></div><div class="stat-sup">L1 — L5 系统化路径</div></div>
+ <div class="stat-card"><div class="stat-top"><span>学习完成度</span><span class="stat-icon">◉</span></div><div class="stat-number">${pct(count,25)}<span class="stat-unit">%</span></div><div class="stat-sup">${count} / 25 节已完成</div></div>
+ <div class="stat-card"><div class="stat-top"><span>知识检验</span><span class="stat-icon">✳</span></div><div class="stat-number">${examined}<span class="stat-unit">/ 25</span></div><div class="stat-sup">已作答单元测验</div></div>
+ <div class="stat-card"><div class="stat-top"><span>实验里程碑</span><span class="stat-icon">⌁</span></div><div class="stat-number">${labs}<span class="stat-unit">/ 75</span></div><div class="stat-sup">自评完成的实验步骤</div></div>
+ </div>`}
+function levelCards(){return LEVELS.map(l=>`<button class="level-card" data-route="level/${l.id}" style="--level:${l.color}"><span class="level-num">LEVEL 0${l.id} <span style="float:right;color:#8494aa">${l.duration}</span></span><span class="level-large">0${l.id}<span style="color:${l.color}">.</span></span><span class="level-name">${l.name}</span><div class="level-meta"><span>${l.en}</span><span>${doneIn(l.id)}/5</span></div><div class="level-pbar"><span style="width:${doneIn(l.id)*20}%"></span></div></button>`).join('')}
+function moduleCards(courses){return courses.map(c=>`<button class="module-card" data-route="lesson/${c.id}"><span class="module-code">${c.id}</span><div class="module-main"><b>${c.title}</b><p>${c.intro}</p></div><div class="module-tail"><span>${c.minutes} MIN</span><span class="${done(c.id)?'done-dot':''}">${done(c.id)?'✓ 已完成':'↗'}</span></div></button>`).join('')}
+function home(){const next=COURSES.find(c=>!done(c.id))||COURSES[24];const lvl=level(next.level);return `
+ <section class="hero"><div class="hero-text"><div class="kicker">YOUR AI ENGINEERING LEARNING OS</div><h1 class="h1">拆解软件的逻辑。<br/><em>构建自己的系统。</em></h1><p class="lede">从 Reverse Engineer Anything 入门到多 Agent 逆向工程工厂。25 个单元，5 级成长路径，用实验、证据与 Knowledge Check 驱动进阶。</p><div class="hero-actions"><button class="btn primary" data-route="lesson/${next.id}">${state.completed.length?'继续学习':'开始第一课'} <span>↗</span></button><button class="btn ghost" data-route="curriculum">浏览课程目录 <span>→</span></button></div></div><div class="hero-art" aria-hidden="true"><div class="orbit"></div><div class="orbit"></div><div class="orbit"></div></div></section>
+ ${stats()}
+ <section class="section"><div class="section-top"><div><div class="eyebrow">01 / CURRICULUM MAP</div><h2 class="section-title">你的五级学习路径</h2></div><button class="link-text" data-route="roadmap">查看完整路线 ↗</button></div><div class="level-grid">${levelCards()}</div></section>
+ <section class="section"><div class="section-top"><div><div class="eyebrow">02 / STUDIO</div><h2 class="section-title">继续向下探索</h2></div></div><div class="split-grid"><div class="panel next-banner"><div><span class="small-label mono">UP NEXT · LEVEL ${next.level} / LESSON ${next.id}</span><h3>${next.title}</h3><p>${next.intro}</p><div class="row" style="margin-top:14px"><span class="label-pill">◷ ${next.minutes} MIN</span><span class="label-pill">${next.tag}</span></div></div><button class="btn primary" data-route="lesson/${next.id}">进入学习单元 ↗</button></div><div class="panel subpanel"><div class="eyebrow">THE METHOD</div><h3 class="panel-title" style="margin-top:10px">Learn → Build → Prove</h3><div class="tip-list"><div class="tip"><span class="tip-number">01</span><div><strong>理解知识</strong><p>精简核心概念、具体情境和常见误区。</p></div></div><div class="tip"><span class="tip-number">02</span><div><strong>动手实践</strong><p>每节课完成 3 项实验步骤并记录产物。</p></div></div><div class="tip"><span class="tip-number">03</span><div><strong>知识检验</strong><p>回答核心问题，正确后解锁本节完成按钮。</p></div></div></div></div></div></section>
+ <section class="section"><div class="notice"><strong>⎔ 项目实践原则：</strong>课程中的 REA 操作与复刻练习仅使用自建样本或取得授权的材料；与谷露项目相关的活动遵循只读取证、脱敏与证据分层，不把云端未知规则当成已验证事实。</div></section>`}
+function levelPage(l){const cs=COURSES.filter(c=>c.level===l.id);const count=doneIn(l.id);return `<button class="course-return" data-route="roadmap">← 返回能力路线图</button><section class="level-hero"><div class="eyebrow">LEARNING PATH · LEVEL 0${l.id}</div><h1 class="h1">${l.name}<span style="color:${l.color}">.</span></h1><p class="lede">${l.mission}</p><div class="row" style="margin-top:22px;flex-wrap:wrap"><span class="label-pill">${l.duration} 学习时长</span><span class="label-pill">5 个单元</span><span class="label-pill">完成 ${count}/5</span><span class="label-pill">升级标准 ${l.threshold} 分</span></div><div class="progress-track" style="margin-top:23px"><span style="width:${count*20}%"></span></div></section>
+ <div class="section-top"><div><div class="eyebrow">COURSE SYLLABUS</div><h2 class="section-title">本级课程 · 5 单元</h2></div><span class="tiny muted">${count} / 5 完成</span></div><div class="module-list">${moduleCards(cs)}</div><div class="assessment"><div class="row-between"><h3>◈ Level ${l.id} 毕业项目</h3>${badge(l)}</div><p>${l.capstone}</p><ul><li>交付物：${l.deliver}</li><li>模块知识检验须正确，实验步骤由你自评确认。</li><li>完成本级所有模块后视为课程学习达标；真实项目的交付验收仍需独立证据审查。</li></ul><button class="btn primary" data-route="lesson/${cs.find(c=>!done(c.id))?.id||cs[0].id}">${count===5?'复习本级课程':'开始本级课程'} ↗</button></div>`}
+function curriculum(){let courses=COURSES.filter(c=>(!filterLevel||c.level===filterLevel)&&(!searchTerm||`${c.title} ${c.intro} ${c.tag} ${c.id}`.toLowerCase().includes(searchTerm.toLowerCase())));let items=filterLevel?moduleCards(courses):LEVELS.map(l=>{const x=courses.filter(c=>c.level===l.id);return x.length?`<div class="row-between" style="margin:29px 0 12px"><h3 style="font-size:15px">L${l.id} · ${l.name}</h3><span class="tiny muted">${doneIn(l.id)} / 5 已完成</span></div><div class="module-list">${moduleCards(x)}</div>`:''}).join('');return `<div class="kicker">CURRICULUM / 25 MODULES</div><h1 class="h1">系统课程目录<span style="color:var(--accent)">.</span></h1><p class="lede">每一课都有概念讲解、真实情境、3 项动手练习和 Knowledge Check。可以跨级浏览，但学习成果按证据和实际实验计分。</p><div class="utility-bar"><input id="catalog-search" class="search-input" style="max-width:440px" type="search" aria-label="搜索课程" placeholder="⌕  搜索课程、知识点、编号..." value="${h(searchTerm)}"/><span class="tiny muted">找到 ${courses.length} 个单元</span></div><div class="filters">${[0,...LEVELS.map(l=>l.id)].map(i=>`<button class="chip ${filterLevel===i?'active':''}" data-filter="${i}">${i===0?'全部课程':`Level ${i}`}</button>`).join('')}</div>${items||'<div class="empty">没有匹配的单元，试试其他关键词。</div>'}`}
+function roadmap(){return `<div class="kicker">CAREER FRAMEWORK / L1—L5</div><h1 class="h1">从工具使用者，<br/><em>到逆向架构师。</em></h1><p class="lede">五级能力不是背诵认证。通过明确的知识、实践成果和工程证据，逐级获得可以复用的逆向能力。</p><div class="roadmap-list">${LEVELS.map(l=>`<div class="roadmap-item"><div class="roadmap-big" style="color:${l.color}">0${l.id}</div><div><div class="eyebrow" style="color:${l.color}">${l.en.toUpperCase()}</div><h3>${l.name}</h3><p>${l.mission}</p><div class="roadmap-tags"><span>${l.duration}</span><span>考核目标 ${l.threshold}+</span><span>毕业：${l.deliver}</span></div></div><button class="btn sm" data-route="level/${l.id}">查看课程 ↗</button></div>`).join('')}</div><section class="section"><div class="notice"><strong>学习评估规则：</strong>每个模块答对 1 道概念检验题，并自行确认 3 步实验后可标记完成。这是学习平台内的自测，不等于正式行业认证，也不替代真实交付的外部验收。</div></section>`}
+function resources(){const cards=[['⌘','REA 官方仓库','工具能力、安装、版本与适用边界，以官方 README 为准。','https://github.com/morluto/rea','查看 GitHub'],['▤','REA 文档索引','跟随文档目录查找 Web、JavaScript、MCP、Provider 等专题。','https://github.com/morluto/rea/tree/main/docs','查看 Docs'],['◇','Playwright','用于浏览器自动化、页面状态观察与 E2E 测试。','https://playwright.dev/docs/intro','查看文档'],['⚙','Chrome DevTools','阅读浏览器 DOM、Network 和调试信息。','https://developer.chrome.com/docs/devtools','查看文档'],['◌','Model Context Protocol','理解 Agent 工具的协议与接口边界。','https://modelcontextprotocol.io/introduction','查看协议'],['↗','Codex','将结构化逆向证据转成独立实现及自动化测试。','https://developers.openai.com/codex/','查看 Codex']];return `<div class="kicker">REFERENCE DESK / TOOLKIT</div><h1 class="h1">工具箱与知识库<span style="color:var(--accent)">.</span></h1><p class="lede">工具文档会不断变化。本站讲授的是稳定的分析方法；实际命令、平台支持和安装参数，请在执行前核对官方版本。</p><div class="resource-grid">${cards.map(c=>`<div class="resource"><div class="resource-icon">${c[0]}</div><div><h3>${c[1]}</h3><p>${c[2]}</p><a href="${c[3]}" target="_blank" rel="noopener noreferrer">${c[4]} ↗</a></div></div>`).join('')}</div><section class="section"><div class="panel"><div class="row-between"><div><h3 class="panel-title">你的学习数据属于你</h3><p class="panel-desc">进度和答题记录保存在当前浏览器的 localStorage，不会跨设备自动同步。随时导出 JSON 备份，再导入到其他设备。</p></div></div><div class="hero-actions"><button class="btn primary" data-action="export">↓ 导出进度 JSON</button><button class="btn ghost" data-action="import">↑ 导入进度 JSON</button></div></div></section>`}
+function lessonPage(c){const l=level(c.level);state.last=c.id;save();const idx=COURSES.indexOf(c);const next=COURSES[idx+1];const tasks=state.tasks[c.id]||[false,false,false];const answered=state.answers[c.id];const right=answered===c.quiz.a;const checked=tasks.filter(Boolean).length;const lessonPercent=pct(checked+(right?1:0),4);const ready=checked===3&&right;return `<button class="course-return" data-route="level/${c.level}">← L${c.level} ${l.name} / 课程目录</button>
+ <header class="learning-header"><div class="meta">${badge(l)} <span>LESSON ${c.id}</span><span>◷ ${c.minutes} MIN</span><span>◆ ${c.tag}</span></div><h1 class="h1">${c.title}<span style="color:${l.color}">.</span></h1><p class="lede">${c.intro}</p></header>
+ <div class="learning-layout"><div class="content-stack">
+ <section class="learn-card" id="theory"><div class="section-step">01 / CORE KNOWLEDGE</div><h2>知识框架</h2><p class="under-title">先掌握重要概念，再看它们如何连接成一个可分析的系统。</p><div class="concept-list">${c.concepts.map((con,i)=>`<div class="concept"><span class="num">CONCEPT 0${i+1}</span><h3>${con[0]}</h3><p>${con[1]}</p></div>`).join('')}</div><div class="case-study"><b>应用到实际场景：</b> ${c.example}</div>${c.code?`<div class="row-between" style="margin-top:22px"><span class="section-step" style="margin:0">TERMINAL / EXAMPLE</span><button class="link-text" data-copy="${c.id}">复制命令 ↗</button></div><pre class="code-block">${h(c.code)}</pre>`:''}</section>
+ <section class="learn-card" id="lab"><div class="section-step">02 / HANDS-ON LAB</div><h2>动手实验</h2><p class="under-title">实验不需要在本站上传账号或程序。请在自己的授权测试环境完成，再逐项自评勾选。</p><div class="lab-tasks">${c.lab.map((task,i)=>`<label class="task"><input type="checkbox" data-task="${c.id}" data-task-index="${i}" ${tasks[i]?'checked':''}/><span>${task}</span></label>`).join('')}</div><div class="deliverable"><strong>⌑ 本节交付物：</strong>${c.deliver}</div></section>
+ <section class="learn-card" id="check"><div class="section-step">03 / KNOWLEDGE CHECK</div><h2>检验你的理解</h2><p class="under-title">回答这道关键题。答对后，还需勾选 3 项实验步骤，才能标记本节完成。</p><h3 style="font-size:14px;line-height:1.9;margin-top:20px">${c.quiz.q}</h3><div class="quiz-options">${c.quiz.options.map((o,i)=>`<button class="option ${answered===i?'selected':''} ${answered===i?(right?'correct':'wrong'):''}" data-answer="${c.id}" data-option="${i}"><span class="option-index">${'ABC'[i]}</span>${h(o)}</button>`).join('')}</div>${Number.isInteger(answered)?`<div class="result-box ${right?'':'bad'}"><b>${right?'✓ 答对了！':'△ 再想一想'}</b><br/>${c.quiz.why}</div>`:'<p class="quiz-hint">知识检验可以反复尝试，不计入外部考试成绩。</p>'}<div class="row-between" style="margin-top:23px;flex-wrap:wrap"><span class="tiny muted">${checked}/3 实验步骤 · ${right?'知识检验已通过':'待通过知识检验'}</span><button class="btn primary" data-finish="${c.id}" ${ready?'':'disabled'}>${done(c.id)?'✓ 已完成本节':'完成本节 →'}</button></div></section>
+ ${next?`<button class="next-lesson" data-route="lesson/${next.id}"><span>下一单元 · ${next.title}</span><b>→</b></button>`:'<button class="next-lesson" data-route="home"><span>恭喜到达课程最后一站 · 返回总览</span><b>→</b></button>'}</div>
+ <aside class="side-study"><div class="study-panel"><h3>本节学习进度</h3><div class="study-ring" style="--pct:${lessonPercent}%"><b>${lessonPercent}%</b><small>CHECKLIST</small></div><div class="study-progress-text">${checked}/3 Lab 已勾选 · ${right?'Quiz 已通过':'Quiz 未通过'}</div><hr class="line"/><h3>学习导航</h3><nav class="lesson-mini-nav"><button data-scroll="theory">◈ 核心概念</button><button data-scroll="lab">▤ 动手实验</button><button data-scroll="check">◎ Knowledge Check</button></nav></div><div class="study-panel"><h3>当前 Level</h3><p>L${l.id} ${l.name} · ${doneIn(l.id)}/5 节已完成</p><div class="progress-track" style="margin-top:14px"><span style="width:${doneIn(l.id)*20}%"></span></div><button class="btn sm ghost" style="margin-top:18px;width:100%" data-route="level/${l.id}">查看本级课表 ↗</button></div><div class="notice"><strong>学习提醒：</strong>本站知识检验为练习题。真实项目仍需要保存分析证据、运行日志和实际验收。</div></aside></div>`}
+function render(){const r=routeFromHash();let page,crumb='学习总览';if(r==='home'){page=home()}else if(r==='curriculum'){page=curriculum();crumb='课程目录'}else if(r==='roadmap'){page=roadmap();crumb='能力路线图'}else if(r==='resources'){page=resources();crumb='工具与资源'}else if(r.startsWith('lesson/')){const c=course(r.split('/')[1]);if(c){page=lessonPage(c);crumb=`L${c.level} / ${c.title}`}else{page=home()}}else if(r.startsWith('level/')){const l=level(r.split('/')[1]);if(l){page=levelPage(l);crumb=`L${l.id} ${l.name}`}else page=home()}else{page=home()};el('page-content').innerHTML=page;el('crumb-name').textContent=crumb;updateSidebar(r);document.title=`${crumb} · REA Academy`}
+function exportProgress(){const blob=new Blob([JSON.stringify({app:'rea-academy',version:1,exportedAt:new Date().toISOString(),progress:state},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`rea-academy-progress-${new Date().toISOString().slice(0,10)}.json`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000);toast('学习进度已导出到文件')}
+async function copyText(text){try{await navigator.clipboard.writeText(text);toast('命令已复制')}catch{const ta=document.createElement('textarea');ta.value=text;document.body.append(ta);ta.select();document.execCommand('copy');ta.remove();toast('命令已复制')}}
+document.addEventListener('click',e=>{
+ const b=e.target.closest('button,[data-action],[data-route],[data-view]');if(!b)return;
+ if(b.dataset.route){route(b.dataset.route);return}
+ if(b.dataset.view){route(b.dataset.view);return}
+ if(b.dataset.filter!==undefined){filterLevel=Number(b.dataset.filter);render();return}
+ if(b.dataset.answer){const id=b.dataset.answer;state.answers[id]=Number(b.dataset.option);save();render();document.getElementById('check')?.scrollIntoView({block:'center',behavior:'smooth'});return}
+ if(b.dataset.finish){const id=b.dataset.finish;const c=course(id);const ok=state.answers[id]===c.quiz.a&&(state.tasks[id]||[]).filter(Boolean).length===3;if(ok){if(!done(id))state.completed.push(id);save();toast('已完成 '+c.title);const i=COURSES.indexOf(c);route(COURSES[i+1]?`lesson/${COURSES[i+1].id}`:'home')}return}
+ if(b.dataset.scroll){el(b.dataset.scroll)?.scrollIntoView({behavior:'smooth',block:'start'});return}
+ if(b.dataset.copy){copyText(course(b.dataset.copy).code);return}
+ if(b.dataset.action==='home'){route('home');return}
+ if(b.dataset.action==='menu'){el('sidebar').classList.toggle('open');el('scrim').classList.toggle('show');return}
+ if(b.dataset.action==='export'){exportProgress();return}
+ if(b.dataset.action==='import'){el('import-file').click();return}
+});
+document.addEventListener('change',e=>{if(e.target.dataset.task){const id=e.target.dataset.task;const i=Number(e.target.dataset.taskIndex);const v=state.tasks[id]||[false,false,false];v[i]=e.target.checked;state.tasks[id]=v;save();render();document.getElementById('lab')?.scrollIntoView({block:'nearest'});}});
+document.addEventListener('input',e=>{if(e.target.id==='catalog-search'){const start=e.target.selectionStart;searchTerm=e.target.value;render();const input=el('catalog-search');input.focus();try{input.setSelectionRange(start,start)}catch{}}});
+el('scrim').addEventListener('click',()=>{el('sidebar').classList.remove('open');el('scrim').classList.remove('show')});
+el('import-file').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{const d=JSON.parse(await file.text());if(d.app!=='rea-academy'||!d.progress)throw Error('invalid');const x=d.progress;state={completed:Array.isArray(x.completed)?x.completed.filter(id=>ids.includes(id)):[],answers:typeof x.answers==='object'&&x.answers?x.answers:{},tasks:typeof x.tasks==='object'&&x.tasks?x.tasks:{},last:ids.includes(x.last)?x.last:'1-1'};save();render();toast('已导入进度记录')}catch{toast('文件格式不符合 REA Academy 进度规范')}finally{e.target.value=''}});
+window.addEventListener('hashchange',()=>{render();window.scrollTo(0,0)});
+render();
+
+  </script>
+</body>
+</html>
