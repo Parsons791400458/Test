@@ -274,8 +274,8 @@ const COURSES = [
 /* REA Academy — no backend, login, telemetry or third-party state sharing. */
 const STORE_KEY = 'rea_academy_progress_v1';
 const ids = COURSES.map(c=>c.id);
-const defaultState = {completed:[],answers:{},tasks:{},last:'1-1'};
-function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE_KEY)||'{}');return {completed:Array.isArray(s.completed)?s.completed.filter(id=>ids.includes(id)):[],answers:typeof s.answers==='object'&&s.answers?s.answers:{},tasks:typeof s.tasks==='object'&&s.tasks?s.tasks:{},last:ids.includes(s.last)?s.last:'1-1'};}catch{return {...defaultState}}}
+const defaultState = {completed:[],answers:{},tasks:{},notes:{},last:'1-1'};
+function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE_KEY)||'{}');return {completed:Array.isArray(s.completed)?s.completed.filter(id=>ids.includes(id)):[],answers:typeof s.answers==='object'&&s.answers?s.answers:{},tasks:typeof s.tasks==='object'&&s.tasks?s.tasks:{},notes:typeof s.notes==='object'&&s.notes?s.notes:{},last:ids.includes(s.last)?s.last:'1-1'};}catch{return {...defaultState}}}
 let state=loadState();let filterLevel=0;let searchTerm='';let toastTimer;
 const el=id=>document.getElementById(id);
 const course=id=>COURSES.find(c=>c.id===id);
@@ -346,7 +346,7 @@ document.addEventListener('click',e=>{
 document.addEventListener('change',e=>{if(e.target.dataset.task){const id=e.target.dataset.task;const i=Number(e.target.dataset.taskIndex);const v=state.tasks[id]||[false,false,false];v[i]=e.target.checked;state.tasks[id]=v;save();render();document.getElementById('lab')?.scrollIntoView({block:'nearest'});}});
 document.addEventListener('input',e=>{if(e.target.id==='catalog-search'){const start=e.target.selectionStart;searchTerm=e.target.value;render();const input=el('catalog-search');input.focus();try{input.setSelectionRange(start,start)}catch{}}});
 el('scrim').addEventListener('click',()=>{el('sidebar').classList.remove('open');el('scrim').classList.remove('show')});
-el('import-file').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{const d=JSON.parse(await file.text());if(d.app!=='rea-academy'||!d.progress)throw Error('invalid');const x=d.progress;state={completed:Array.isArray(x.completed)?x.completed.filter(id=>ids.includes(id)):[],answers:typeof x.answers==='object'&&x.answers?x.answers:{},tasks:typeof x.tasks==='object'&&x.tasks?x.tasks:{},last:ids.includes(x.last)?x.last:'1-1'};save();render();toast('已导入进度记录')}catch{toast('文件格式不符合 REA Academy 进度规范')}finally{e.target.value=''}});
+el('import-file').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{const d=JSON.parse(await file.text());if(d.app!=='rea-academy'||!d.progress)throw Error('invalid');const x=d.progress;state={completed:Array.isArray(x.completed)?x.completed.filter(id=>ids.includes(id)):[],answers:typeof x.answers==='object'&&x.answers?x.answers:{},tasks:typeof x.tasks==='object'&&x.tasks?x.tasks:{},notes:typeof x.notes==='object'&&x.notes?x.notes:{},last:ids.includes(x.last)?x.last:'1-1'};save();render();toast('已导入进度记录')}catch{toast('文件格式不符合 REA Academy 进度规范')}finally{e.target.value=''}});
 window.addEventListener('hashchange',()=>{render();window.scrollTo(0,0)});
 render();
 
